@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require "bundler"
+Bundler.setup
+
+require "snowflakes/cli"
+
+begin
+  require_relative '../config/snowflakes'
+rescue LoadError; end
+
+Snowflakes::CLI.start(ARGV)

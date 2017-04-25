@@ -1,0 +1,16 @@
+language: ruby
+dist: trusty
+sudo: required
+cache: bundler
+addons:
+  postgresql: 9.5
+services:
+  - postgresql
+bundler_args: --without yard guard benchmarks tools
+script: "bundle exec rake spec"
+rvm:
+  - 2.4.1
+notifications:
+    on_success: change
+    on_failure: always
+    on_start: false
