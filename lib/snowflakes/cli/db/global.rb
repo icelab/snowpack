@@ -11,7 +11,7 @@ module Snowflakes
           method_option :target, aliases: '-t', desc: 'Schema version'
           def migrate
             run('db/migrate', options.key?('target') ? options['target'].to_i : nil)
-            run('db/version')
+            version
           end
         end
 
