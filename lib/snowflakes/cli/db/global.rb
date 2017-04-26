@@ -48,9 +48,9 @@ module Snowflakes
 
         with_env 'reset', 'Drop, create and migrate the database' do
           def reset
-            run('db/drop')
-            run('db/create')
-            run('db/migrate')
+            drop
+            create
+            migrate
           end
         end
 
