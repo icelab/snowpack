@@ -1,6 +1,10 @@
 require 'snowflakes/cli/global'
 
 RSpec.describe 'sf console' do
+  before do
+    `createdb dummy_test &> /dev/null`
+  end
+
   it 'starts a console in development env by default' do
     with_command(:console) do |output|
       expect(output).to include 'dummy[development] booted'
