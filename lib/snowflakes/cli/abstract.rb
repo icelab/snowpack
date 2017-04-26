@@ -17,6 +17,7 @@ module Snowflakes
 
       def run(name, *args)
         require "snowflakes/commands/#{name}"
+        ENV['RACK_ENV'] = options['env'] if options.key?('env')
         Commands.const_get(Inflecto.camelize(name)).run(application, *args)
       end
 
