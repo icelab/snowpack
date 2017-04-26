@@ -9,13 +9,14 @@ module Snowflakes
             if connection.tables.include?(:schema_migrations)
               connection[:schema_migrations].
                 order(:filename).
+                reverse.
                 limit(1).
                 first[:filename]
             else
               "not available"
             end
 
-          puts "Current schema version: #{version}"
+          puts "=> current schema version is #{version}"
         end
       end
     end
