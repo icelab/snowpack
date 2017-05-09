@@ -2,12 +2,13 @@ require 'snowflakes/console/context'
 
 module Snowflakes
   class Application
-    attr_reader :config, :root, :name, :env, :container, :subapps
+    attr_reader :config, :root, :name, :env, :container, :subapps, :system_path
 
     def initialize(config, env = nil)
       @config = config
       @root = config.root
       @name = config.name || config.root.split.last.to_s
+      @system_path = "#{root}/#{config.system_dir}"
       @env = env || config.env
     end
 
@@ -19,7 +20,7 @@ module Snowflakes
       if component
         boot_component(component)
       else
-        require "#{config.system_path % { root: root, name: name }}/boot"
+        require "#{system_path}/boot"
         load_sub_apps
       end
     end
@@ -73,7 +74,7 @@ module Snowflakes
     end
 
     def require_container
-      require "#{config.system_path}/%{name}/container" % { root: root, name: name }
+      require "#{system_path}/#{name}/container" % { root: root, name: name }
     end
   end
 end

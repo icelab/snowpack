@@ -7,5 +7,5 @@ module Snowflakes
   setting :root, Pathname.pwd, reader: true
   setting :name
   setting :env, :development
-  setting :system_path, "%{root}/system"
+  setting :system_dir, "system"
 end
