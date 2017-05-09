@@ -1,13 +1,15 @@
 require 'snowflakes/console/context'
+require 'byebug'
 
 module Snowflakes
   class Application
     attr_reader :config, :root, :name, :env, :container, :subapps, :system_path
 
-    def initialize(config, env = nil)
+    def initialize(config)
       @config = config
+      @env = config.env
       @root = config.root
-      @name = config.name || config.root.split.last.to_s
+      @name = config.system
       @system_path = "#{root}/#{config.system_dir}"
       @env = env || config.env
     end
@@ -20,8 +22,14 @@ module Snowflakes
       if component
         boot_component(component)
       else
-        require "#{system_path}/boot"
-        load_sub_apps
+        boot_file_path = Dir["#{system_path}/**/*.rb"].detect { |f| f.include?('boot.rb') }
+
+        if boot_file_path
+          require boot_file_path
+          load_sub_apps
+        else
+          raise "Couldn't find boot.rb for #{name} system"
+        end
       end
     end
 
@@ -57,6 +65,10 @@ module Snowflakes
         end
     end
 
+    def sub_system?
+      config.sub_system
+    end
+
     private
 
     def db_seed_file
@@ -64,9 +76,16 @@ module Snowflakes
     end
 
     def load_sub_apps
-      @subapps ||= Dir["#{root}/apps/*"].map do |path|
-        constantize(Pathname(path).basename.to_s)
-      end
+      @subapps ||=
+        begin
+          if sub_system?
+            []
+          else
+            Dir["#{root}/apps/*"].map do |path|
+              constantize(Pathname(path).basename.to_s)
+            end
+          end
+        end
     end
 
     def constantize(name)
@@ -74,7 +93,13 @@ module Snowflakes
     end
 
     def require_container
-      require "#{system_path}/#{name}/container" % { root: root, name: name }
+      path = Dir["#{system_path}/**/*.rb"].detect { |f| f.include?('container.rb') }
+
+      if path
+        require path.gsub('.rb', '')
+      else
+        raise "Failed to find container.rb in #{root}/#{system_path}"
+      end
     end
   end
 end

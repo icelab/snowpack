@@ -10,8 +10,12 @@ module Snowflakes
 
       def self.new(*args)
         ctx = super
-        ctx.extend(Snowflakes::Console::Plugins::RelationReaders.new(ctx))
-        ctx.extend(Snowflakes::Console::Plugins::RepoReaders.new(ctx))
+
+        if ctx.rom
+          ctx.extend(Snowflakes::Console::Plugins::RelationReaders.new(ctx))
+          ctx.extend(Snowflakes::Console::Plugins::RepoReaders.new(ctx))
+        end
+
         ctx
       end
 
@@ -22,7 +26,7 @@ module Snowflakes
       end
 
       def rom
-        container['persistence.rom']
+        container['persistence.rom'] if container.key?('persistence.rom')
       end
     end
   end

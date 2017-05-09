@@ -18,4 +18,18 @@ RSpec.describe 'sf console' do
       expect(output).to include 'dummy[production]> '
     end
   end
+
+  it 'starts a console for a specific sub-app' do
+    with_command(:console, a: 'web') do |output|
+      expect(output).to include 'web[development] booted'
+      expect(output).to include 'web[development]> '
+    end
+  end
+
+  it 'starts a console for a specific sub-system' do
+    with_command(:console, s: 'web') do |output|
+      expect(output).to include 'web[development] booted'
+      expect(output).to include 'web[development]> '
+    end
+  end
 end

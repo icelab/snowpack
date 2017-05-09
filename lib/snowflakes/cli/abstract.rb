@@ -10,6 +10,8 @@ module Snowflakes
       def self.with_env(*args, &block)
         desc(*args)
         method_option :env, aliases: ['-e'], desc: 'Application environment'
+        method_option :system, aliases: ['-s'], desc: 'Name of the sub-system to load'
+        method_option :app, aliases: ['-a'], desc: 'Name of the sub-app to load'
         block.call
       end
 
@@ -22,11 +24,11 @@ module Snowflakes
       end
 
       def application
-        Application.new(config, options['env'])
+        Application.new(config)
       end
 
       def config
-        Snowflakes.config
+        Snowflakes.configure(options)
       end
     end
   end
