@@ -11,7 +11,11 @@ module Snowflakes
       private
 
       def files
-        @files ||= Dir["#{app.root}/apps/**/*.rb"].join(' ')
+        @files ||= (file_list(:rb) + file_list(:slim)).join(' ')
+      end
+
+      def file_list(ext)
+        Dir["#{app.root}/apps/**/*.#{ext}"]
       end
 
       def entr_cmd
