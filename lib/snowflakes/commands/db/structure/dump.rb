@@ -6,13 +6,15 @@ module Snowflakes
       module Structure
         class Dump < Database
           def start
-            system(%(pg_dump -h #{hostname} --schema-only --no-owner #{db_name} > #{output_file}))
+            measure("#{db_name} structure dumped to #{output_file}") do
+              system(%(pg_dump -h #{hostname} --schema-only --no-owner #{db_name} > #{output_file}))
+            end
           end
 
           private
 
           def output_file
-            'db/structure.sql'
+            "#{app.root}/db/structure.sql"
           end
         end
       end

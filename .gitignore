@@ -13,3 +13,4 @@
 
 # dummy app files created in specs
 spec/dummy/db/migrate/*
+spec/dummy/db/structure.sql

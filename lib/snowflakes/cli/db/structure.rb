@@ -6,9 +6,10 @@ module Snowflakes
       class Structure < Abstract
         namespace 'structure'
 
-        desc 'dump', 'Dumps schema structure to db/structure.sql'
-        def dump
-          run('db/structure/dump')
+        with_env('dump', 'Dumps schema structure to db/structure.sql') do
+          def dump
+            run('db/structure/dump')
+          end
         end
       end
     end

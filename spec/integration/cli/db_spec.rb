@@ -23,6 +23,19 @@ RSpec.describe 'exe/run db' do
     end
   end
 
+  describe 'structure dump' do
+    before do
+      `createdb dummy_test &> /dev/null`
+    end
+
+    it 'dumps the database to {root}/db/structure.sql' do
+      with_command('db structure dump') do |output|
+        expect(output).to include 'dummy_test structure dumped to'
+        expect(output).to include 'db/structure.sql'
+      end
+    end
+  end
+
   describe 'create_migration' do
     before do
       `createdb dummy_test &> /dev/null`
