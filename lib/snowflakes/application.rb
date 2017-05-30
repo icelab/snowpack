@@ -1,5 +1,4 @@
 require 'snowflakes/console/context'
-require 'byebug'
 
 module Snowflakes
   class Application
