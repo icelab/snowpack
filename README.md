@@ -96,6 +96,12 @@ berg[development]> user_repo
 
 ## Application reloader
 
+For the reloader to work you need to start puma as follows:
+
+```
+bundle exec puma config.ru --pidfile tmp/pids/puma-api.pid
+```
+
 To start application reloader type:
 
 ```
