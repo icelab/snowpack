@@ -60,6 +60,7 @@ RSpec.describe 'exe/run db' do
         expect(output).to include 'database dummy_test dropped'
         expect(output).to include 'database dummy_test created'
         expect(output).to include 'migrations executed'
+        expect(output).to include 'dummy_test structure dumped to'
       end
     end
   end
