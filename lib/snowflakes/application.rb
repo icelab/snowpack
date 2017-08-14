@@ -33,7 +33,7 @@ module Snowflakes
     end
 
     def boot_component(name)
-      container.boot(name)
+      container.init(name)
     end
 
     def has_db_seed?
