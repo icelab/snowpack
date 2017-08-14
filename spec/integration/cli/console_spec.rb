@@ -27,9 +27,9 @@ RSpec.describe 'sf console' do
   end
 
   it 'starts a console for a specific sub-system' do
-    with_command(:console, s: 'web') do |output|
-      expect(output).to include 'web[development] booted'
-      expect(output).to include 'web[development]> '
+    with_command(:console, s: 'mail') do |output|
+      expect(output).to include 'mail[development] booted'
+      expect(output).to include 'mail[development]> '
     end
   end
 end
