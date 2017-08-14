@@ -30,6 +30,14 @@ module Snowflakes
       def config
         Snowflakes.configure(options)
       end
+
+      def development?
+        options.key?('env') ? env == 'development' : true
+      end
+
+      def env
+        options.fetch('env', 'development')
+      end
     end
   end
 end

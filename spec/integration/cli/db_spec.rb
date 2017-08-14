@@ -49,6 +49,28 @@ RSpec.describe 'exe/run db' do
     end
   end
 
+  describe 'migrate' do
+    before do
+      `dropdb dummy_test &> /dev/null`
+      `createdb dummy_test &> /dev/null`
+      FileUtils.cp("#{SPEC_ROOT}/fixtures/migrations/20170425120106_add_users.rb", "#{SPEC_ROOT}/dummy/db/migrate")
+    end
+
+    it 'migrates db and dumps structure in development' do
+      with_command('db reset') do |output|
+        expect(output).to include 'migrations executed'
+        expect(output).to include 'dummy_test structure dumped to'
+      end
+    end
+
+    it 'migrates db and does not dump structure in non-development' do
+      with_command('db migrate -e test') do |output|
+        expect(output).to include 'migrations executed'
+        expect(output).to_not include 'dummy_test structure dumped to'
+      end
+    end
+  end
+
   describe 'reset' do
     before do
       `createdb dummy_test &> /dev/null`
