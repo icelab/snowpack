@@ -5,7 +5,7 @@ module Snowflakes
   module Commands
     class Database < DatabaseConfig
       def prepare
-        app.boot(:rom)
+        app.boot(:persistence)
       end
 
       def gateway
