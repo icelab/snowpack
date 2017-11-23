@@ -68,8 +68,6 @@ module Snowflakes
       config.sub_system
     end
 
-    private
-
     def db_seed_file
       "#{root}/db/seed.rb"
     end
@@ -80,18 +78,28 @@ module Snowflakes
           if sub_system?
             []
           else
-            Dir["#{root}/apps/*"].map do |path|
+            sub_app_names.map do |path|
               constantize(Pathname(path).basename.to_s)
             end
           end
         end
     end
 
+    def sub_app_names
+      Dir["#{root}/apps/*"].to_a
+    end
+
     def constantize(name)
       Inflecto.constantize(Inflecto.camelize(name))
     end
 
-    def require_container
+    def require_sub_app_containers
+      sub_app_names.each do |name|
+        require_container(root.join("apps/#{name}/system"))
+      end
+    end
+
+    def require_container(path = system_path)
       path = Dir["#{system_path}/**/*.rb"].detect { |f| f.include?('container.rb') }
 
       if path

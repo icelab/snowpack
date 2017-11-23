@@ -1,5 +1,8 @@
 require 'rspec/core'
 
+require 'snowflakes/application'
+require 'snowflakes/config'
+
 module Snowflakes
   module Test
     module Helpers
@@ -13,11 +16,6 @@ module Snowflakes
     class Suite
       DB_CLEANUP_PATH_REGEX = /(features|integration)/
 
-      def self.inherited(klass)
-        super
-        Suite.current = klass
-      end
-
       class << self
         attr_accessor :current
 
@@ -28,6 +26,11 @@ module Snowflakes
         def instance
           @__instance__ ||= new
         end
+      end
+
+      def self.inherited(klass)
+        super
+        Suite.current = klass
       end
 
       def self.configure(&block)
@@ -67,10 +70,15 @@ module Snowflakes
         end
       end
 
-      attr_reader :root
+      def self.application
+        @__application__ ||= Application.new(Snowflakes.configure).freeze
+      end
 
-      def initialize(root = self.class.root.join("suite"))
+      attr_reader :root, :app
+
+      def initialize(root = self.class.root.join('suite'))
         @root = root
+        @app = Suite.application
       end
 
       def start_coverage
@@ -89,6 +97,11 @@ module Snowflakes
             add_filter '/system/'
           end
         end
+      end
+
+      def require_containers
+        app.require_container
+        app.require_sub_app_containers
       end
 
       def file_group(idx = nil)
