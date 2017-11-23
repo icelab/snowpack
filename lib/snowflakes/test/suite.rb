@@ -85,13 +85,6 @@ module Snowflakes
         if ENV['COVERAGE']
           require "simplecov"
 
-          if (circle_artifacts_path = ENV['CIRCLE_ARTIFACTS'])
-            SimpleCov.coverage_dir(File.join(circle_artifacts_path, 'coverage'))
-
-            require 'simplecov/parallel'
-            SimpleCov::Parallel.activate
-          end
-
           SimpleCov.start do
             add_filter '/spec/'
             add_filter '/system/'
