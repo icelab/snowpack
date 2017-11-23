@@ -13,8 +13,17 @@ module Snowflakes
     class Suite
       DB_CLEANUP_PATH_REGEX = /(features|integration)/
 
-      def self.root
-        @__root__ ||= Pathname(Dir.pwd).join("spec").freeze
+      def self.inherited(klass)
+        super
+        Suite.current = klass
+      end
+
+      class << self
+        attr_accessor :current
+
+        def root
+          @__root__ ||= Pathname(Dir.pwd).join("spec").freeze
+        end
       end
 
       def self.configure(&block)
