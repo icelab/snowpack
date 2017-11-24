@@ -82,13 +82,17 @@ module Snowflakes
       end
 
       def start_coverage
-        if ENV['COVERAGE']
-          require "simplecov"
+        return unless coverage?
 
-          SimpleCov.start do
-            add_filter '/spec/'
-            add_filter '/system/'
-          end
+        require 'simplecov'
+
+        if parallel?
+          SimpleCov.command_name(test_group_name)
+        end
+
+        SimpleCov.start do
+          add_filter '/spec/'
+          add_filter '/system/'
         end
       end
 
@@ -97,7 +101,11 @@ module Snowflakes
         app.require_sub_app_containers
       end
 
-      def file_group(idx = nil)
+      def test_group_name
+        @__test_group_name__ ||= "test_suite_#{build_idx}".freeze
+      end
+
+      def file_group(idx = build_idx)
         case idx
         when -1 then files
         when 0 then chdir(:integration).files + chdir(:main).files
@@ -121,6 +129,22 @@ module Snowflakes
 
       def dirs
         Dir[root.join("*")].map(&Kernel.method(:Pathname)).select(&:directory?)
+      end
+
+      def build_idx
+        ENV.fetch('CIRCLE_NODE_INDEX', -1).to_i
+      end
+
+      def coverage?
+        ENV['COVERAGE'] == 'true'
+      end
+
+      def ci?
+        !ENV['CIRCLECI'].nil?
+      end
+
+      def parallel?
+        ENV['CIRCLE_NODE_TOTAL'].to_i > 1
       end
 
       def capybara_server_port

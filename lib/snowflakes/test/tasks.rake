@@ -9,15 +9,13 @@ begin
   RSpec::Core::RakeTask.new :spec do |t|
     opts = []
 
-    if ENV["CIRCLECI"]
+    if suite.ci?
       opts << "--format RspecJunitFormatter"
       opts << "--out /tmp/test-results/rspec.xml"
       opts << "--format progress"
     end
 
-    build_idx = ENV.fetch("CIRCLE_NODE_INDEX", -1).to_i
-
-    opts << "--pattern #{suite.file_group(build_idx).join(' ')}"
+    opts << "--pattern #{suite.file_group.join(' ')}"
 
     t.rspec_opts = opts.join(" ")
   end
