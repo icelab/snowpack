@@ -27,6 +27,14 @@ begin
         t.rspec_opts = "--pattern #{suite.chdir(group).files.join(' ')}"
       end
     end
+
+    desc 'Verify coverage'
+    task :verify_coverage do
+      if suite.current_coverage.to_i < suite.coverage_threshold
+        puts "Coverage too low. Current: #{suite.current_coverage}%; Expected min: #{suite.coverage_threshold}%"
+        exit 1
+      end
+    end
   end
 
   task default: [:spec]

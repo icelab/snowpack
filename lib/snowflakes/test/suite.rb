@@ -1,4 +1,5 @@
 require 'rspec/core'
+require 'json'
 
 require 'snowflakes/application'
 require 'snowflakes/config'
@@ -94,6 +95,15 @@ module Snowflakes
           add_filter '/spec/'
           add_filter '/system/'
         end
+      end
+
+      def coverage_threshold
+        ENV.fetch('COVERAGE_THRESHOLD').to_i
+      end
+
+      def current_coverage
+        data = JSON.load(app.root.join('coverage/.last_run.json'))
+        data.fetch('result').fetch('covered_percent').to_f
       end
 
       def require_containers
