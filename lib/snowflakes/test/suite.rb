@@ -161,6 +161,14 @@ module Snowflakes
         3001
       end
 
+      def log_dir
+        app.root.join("log").realpath
+      end
+
+      def tmp_dir
+        app.root.join("tmp").realpath
+      end
+
       def clean_db?(example)
         DB_CLEANUP_PATH_REGEX.match?(example.metadata[:file_path])
       end
