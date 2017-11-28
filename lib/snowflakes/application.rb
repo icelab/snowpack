@@ -86,7 +86,7 @@ module Snowflakes
     end
 
     def sub_app_names
-      Dir["#{root}/apps/*"].to_a
+      Dir["#{root}/apps/*"].map { |path| Pathname(path).basename }
     end
 
     def constantize(name)
@@ -95,12 +95,12 @@ module Snowflakes
 
     def require_sub_app_containers
       sub_app_names.each do |name|
-        require_container(root.join("apps/#{name}/system"))
+        require_container(root.join("apps/#{name}/system").realpath)
       end
     end
 
     def require_container(path = system_path)
-      path = Dir["#{system_path}/**/*.rb"].detect { |f| f.include?('container.rb') }
+      path = Dir["#{path}/**/*.rb"].detect { |f| f.include?('container.rb') }
 
       if path
         require path.gsub('.rb', '')
