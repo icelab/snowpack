@@ -26,12 +26,11 @@ Dry::System.register_component(:view, provider: :snowflakes) do
       end
     end
 
-    # Manually register generic parts we share across sub-apps
-    # require "readings/view/parts/pager"
-    # decorator.parts[:pager] = Readings::View::Parts::Pager
+    require "snowflakes/view/parts/pager"
+    decorator.parts[:pager] = Snowflakes::View::Parts::Pager
 
-    # require "readings/view/parts/paginated_results"
-    # decorator.parts[:paginated_results] = Readings::View::Parts::PaginatedResults
+    require "snowflakes/view/parts/paginated_results"
+    decorator.parts[:paginated_results] = Snowflakes::View::Parts::PaginatedResults
 
     container.register "decorator", decorator
   end

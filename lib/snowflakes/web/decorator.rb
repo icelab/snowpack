@@ -37,7 +37,7 @@ module Snowflakes
       end
 
       def paginated_results?(value)
-        value.respond_to?(:to_ary) && value.respond_to?(:pager)
+        value.respond_to?(:to_a) && value.respond_to?(:pager)
       end
 
       def decorate_paginated_results(name, value, renderer:, context:, **options)
