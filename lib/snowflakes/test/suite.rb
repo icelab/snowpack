@@ -115,16 +115,6 @@ module Snowflakes
         @__test_group_name__ ||= "test_suite_#{build_idx}".freeze
       end
 
-      def file_group(idx = build_idx)
-        case idx
-        when -1 then files
-        when 0 then chdir(:integration).files + chdir(:main).files
-        when 1 then chdir(:admin).files
-        else
-          files
-        end
-      end
-
       def chdir(name)
         self.class.new(root.join(name.to_s))
       end

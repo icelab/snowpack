@@ -7,15 +7,13 @@ begin
 
   desc "Run all specs"
   RSpec::Core::RakeTask.new :spec do |t|
-    opts = []
+    opts = ["#{suite.root} --pattern **/*_spec.rb"]
 
     if suite.ci?
       opts << "--format RspecJunitFormatter"
       opts << "--out /tmp/test-results/rspec.xml"
       opts << "--format progress"
     end
-
-    opts << "--pattern #{suite.file_group.join(' ')}"
 
     t.rspec_opts = opts.join(" ")
   end
@@ -24,7 +22,7 @@ begin
     suite.groups.each do |group|
       desc "Run #{group} specs"
       RSpec::Core::RakeTask.new(group) do |t|
-        t.rspec_opts = "--pattern #{suite.chdir(group).files.join(' ')}"
+        t.rspec_opts = "#{suite.chdir(group).root} --pattern **/*_spec.rb"
       end
     end
 
