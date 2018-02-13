@@ -19,7 +19,7 @@ module Snowflakes
 
       def run(name, *args)
         require "snowflakes/commands/#{name}"
-        ENV['RACK_ENV'] = options['env'] if options.key?('env')
+        ENV['RACK_ENV'] ||= options['env'] if options.key?('env')
         Commands.const_get(Inflecto.camelize(name)).run(application, *args)
       end
 
@@ -28,7 +28,7 @@ module Snowflakes
       end
 
       def config
-        Snowflakes.configure(options)
+        Snowflakes.configure(options.merge(env: env))
       end
 
       def development?
@@ -36,7 +36,7 @@ module Snowflakes
       end
 
       def env
-        options.fetch('env', 'development')
+        options.fetch('env', ENV['RACK_ENV'] || 'development')
       end
     end
   end

@@ -9,8 +9,8 @@ module Snowflakes
       @env = config.env
       @root = config.root
       @name = config.system
+      @env = config.env
       @system_path = "#{root}/#{config.system_dir}"
-      @env = env || config.env
     end
 
     def context
