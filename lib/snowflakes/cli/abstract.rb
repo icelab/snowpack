@@ -32,7 +32,7 @@ module Snowflakes
       end
 
       def development?
-        options.key?('env') ? env == 'development' : true
+        env == 'development'
       end
 
       def env

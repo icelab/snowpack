@@ -68,6 +68,15 @@ RSpec.describe 'exe/run db' do
         expect(output).to include 'migrations executed'
         expect(output).to_not include 'dummy_test structure dumped to'
       end
+
+      ENV['RACK_ENV'] = 'test'
+
+      with_command('db migrate -e test') do |output|
+        expect(output).to include 'migrations executed'
+        expect(output).to_not include 'dummy_test structure dumped to'
+      end
+
+      ENV.delete('RACK_ENV')
     end
   end
 
