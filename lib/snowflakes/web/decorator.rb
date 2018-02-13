@@ -50,9 +50,13 @@ module Snowflakes
 
         singular_name = Inflecto.singularize(name).to_sym
         singular_options = singularize_options(options)
-        results = value.to_ary.map { |obj| call(singular_name, obj, renderer: renderer, context: context, **singular_options) }
+
+        results = value.to_ary.map { |obj|
+          call(singular_name, obj, renderer: renderer, context: context, **singular_options)
+        }
 
         results_class = part_class(name, value, fallback: parts.fetch(:paginated_results), **options)
+
         results_class.new(
           name: name,
           value: results,
