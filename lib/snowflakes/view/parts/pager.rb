@@ -52,6 +52,10 @@ module Snowflakes
           total_pages <= 1
         end
 
+        def all_pages
+          (first_page..last_page).to_a
+        end
+
         def each_entry
           return to_enum(:each_entry) unless block_given?
 
