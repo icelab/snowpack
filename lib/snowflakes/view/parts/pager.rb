@@ -52,7 +52,7 @@ module Snowflakes
           total_pages <= 1
         end
 
-        def all_pages
+        def all_page_numbers
           (first_page..last_page).to_a
         end
 
