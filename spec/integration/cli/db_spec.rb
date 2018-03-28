@@ -1,9 +1,9 @@
 RSpec.describe 'exe/run db' do
-  describe 'create' do
-    before do
-      `dropdb dummy_test &> /dev/null`
-    end
+  after do
+    `dropdb dummy_test > /dev/null 2>&1`
+  end
 
+  describe 'create' do
     it 'creates the database' do
       with_command('db create') do |output|
         expect(output).to include 'database dummy_test created'
@@ -13,7 +13,7 @@ RSpec.describe 'exe/run db' do
 
   describe 'drop' do
     before do
-      `createdb dummy_test &> /dev/null`
+      `createdb dummy_test > /dev/null`
     end
 
     it 'drops the database' do
@@ -25,7 +25,7 @@ RSpec.describe 'exe/run db' do
 
   describe 'structure dump' do
     before do
-      `createdb dummy_test &> /dev/null`
+      `createdb dummy_test > /dev/null`
     end
 
     it 'dumps the database to {root}/db/structure.sql' do
@@ -38,22 +38,25 @@ RSpec.describe 'exe/run db' do
 
   describe 'create_migration' do
     before do
-      `createdb dummy_test &> /dev/null`
+      `createdb dummy_test > /dev/null`
       FileUtils.rm(Dir["#{SPEC_ROOT}/dummy/db/migrate/*.rb"])
     end
 
     it 'creates a new migration' do
       with_command('db create_migration -n add_users') do |output|
-        expect(output).to match /migration add_users_(\d+) created/
+        expect(output).to match %r{migration add_users_(\d+) created}
       end
     end
   end
 
   describe 'migrate' do
     before do
-      `dropdb dummy_test &> /dev/null`
-      `createdb dummy_test &> /dev/null`
-      FileUtils.cp("#{SPEC_ROOT}/fixtures/migrations/20170425120106_add_users.rb", "#{SPEC_ROOT}/dummy/db/migrate/")
+      `createdb dummy_test > /dev/null`
+
+      FileUtils.cp(
+        "#{SPEC_ROOT}/fixtures/migrations/20170425120106_add_users.rb",
+        "#{SPEC_ROOT}/dummy/db/migrate/",
+      )
     end
 
     it 'migrates db and dumps structure in development' do
@@ -83,7 +86,11 @@ RSpec.describe 'exe/run db' do
   describe 'reset' do
     before do
       `createdb dummy_test &> /dev/null`
-      FileUtils.cp("#{SPEC_ROOT}/fixtures/migrations/20170425120106_add_users.rb", "#{SPEC_ROOT}/dummy/db/migrate")
+
+      FileUtils.cp(
+        "#{SPEC_ROOT}/fixtures/migrations/20170425120106_add_users.rb",
+        "#{SPEC_ROOT}/dummy/db/migrate/",
+      )
     end
 
     it 'drops, creates and migrates the database' do
