@@ -53,7 +53,7 @@ RSpec.describe 'exe/run db' do
     before do
       `dropdb dummy_test &> /dev/null`
       `createdb dummy_test &> /dev/null`
-      FileUtils.cp("#{SPEC_ROOT}/fixtures/migrations/20170425120106_add_users.rb", "#{SPEC_ROOT}/dummy/db/migrate")
+      FileUtils.cp("#{SPEC_ROOT}/fixtures/migrations/20170425120106_add_users.rb", "#{SPEC_ROOT}/dummy/db/migrate/")
     end
 
     it 'migrates db and dumps structure in development' do
