@@ -79,7 +79,11 @@ module Snowflakes
             []
           else
             sub_app_names.map do |path|
-              constantize(Pathname(path).basename.to_s)
+              begin
+                constantize("#{name}/#{Pathname(path).basename}")
+              rescue NameError
+                constantize(Pathname(path).basename.to_s)
+              end
             end
           end
         end
