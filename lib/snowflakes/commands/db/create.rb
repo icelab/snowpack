@@ -5,7 +5,7 @@ module Snowflakes
     module Db
       class Create < DatabaseConfig
         def start
-          `createdb #{db_name}`
+          `createdb #{db_name} -h #{hostname}  -p #{port} -U #{username}`
           puts "=> database #{db_name} created"
         end
       end
