@@ -5,7 +5,7 @@ module Snowflakes
     module Db
       class Drop < DatabaseConfig
         def start
-          `dropdb #{db_name} -h #{hostname} -p #{port} -U #{username}`
+          `dropdb #{db_name} -h #{hostname} -p #{port} #{username_flag}`
           puts "=> database #{db_name} dropped"
         end
       end

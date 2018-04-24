@@ -7,7 +7,7 @@ module Snowflakes
         class Dump < Database
           def start
             measure("#{db_name} structure dumped to #{output_file}") do
-              system(%(pg_dump -h #{hostname}  -p #{port} -U #{username} --schema-only --no-owner #{db_name} > #{output_file}))
+              system(%(pg_dump -h #{hostname}  -p #{port} #{username_flag} --schema-only --no-owner #{db_name} > #{output_file}))
             end
           end
 

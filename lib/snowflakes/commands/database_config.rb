@@ -11,11 +11,15 @@ module Snowflakes
       end
 
       def username
-        uri.user || ''
+        uri.user || nil
       end
 
       def port
         uri.port || 5432
+      end
+
+      def username_flag
+        username ? "-U #{username}" : ""
       end
 
       def db_name
