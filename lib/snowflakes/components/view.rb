@@ -17,7 +17,7 @@ Dry::System.register_component(:view, provider: :snowflakes) do
     decorator = config.decorator_class.new
 
     config.part_globs.each do |pattern|
-      Dir["#{pattern}/**/*.rb"].each do |file_path|
+      Dir["#{pattern}/*.rb"].each do |file_path|
         part_path = file_path.gsub(target.root.join("lib/").to_s, "").gsub(".rb", "")
         part_name = File.basename(part_path, ".rb")
 
