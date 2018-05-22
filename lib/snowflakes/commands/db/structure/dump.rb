@@ -10,14 +10,17 @@ module Snowflakes
             measure("#{db_name} structure dumped to #{output_file}") do
               # To avoid version incompatibility errors we want to run pg_dump
               # on the same system as the actual running database.
-              cmd =
-                if docker_compose_postgres?
-                  "docker-compose exec postgres 'pg_dump --schema-only --no-owner #{Shellwords.escape(db_name)}' > #{output_file}"
-                else
-                  "pg_dump --schema-only --no-owner #{Shellwords.escape(db_name)} > #{output_file}"
-                end
-
-              system(postgres_cli_env_vars, cmd)
+              if docker_compose_postgres?
+                env_args = postgres_cli_env_vars
+                  .select { |k, _| %w[PGUSER PGPASSWORD].include?(k) }
+                  .map { |k,v| "-e #{k}=#{Shellwords.escape(v)}" }
+                  .join(" ")
+                cmd = "docker-compose exec -T #{env_args} postgres pg_dump --schema-only --no-owner #{Shellwords.escape(db_name)} > #{output_file}"
+                system(cmd)
+              else
+                cmd = "pg_dump --schema-only --no-owner #{Shellwords.escape(db_name)} > #{output_file}"
+                system(postgres_cli_env_vars, cmd)
+              end
             end
           end
 
