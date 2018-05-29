@@ -10,6 +10,18 @@ module Snowflakes
         uri.hostname
       end
 
+      def username
+        uri.user || nil
+      end
+
+      def port
+        uri.port || 5432
+      end
+
+      def username_flag
+        username ? "-U #{username}" : ""
+      end
+
       def db_name
         @db_name ||= uri.path.gsub(/^\//, '')
       end
