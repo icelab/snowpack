@@ -1,7 +1,7 @@
 module Helpers
-  def with_command(name, **opts)
+  def with_command(name, env: {}, **opts)
     cmd = command([name, opts.map { |(k,v)| "-#{k} #{v}" }.join(' ')].compact.join(' '))
-    status, out, err = system_exec(cmd)
+    status, out, err = system_exec(env, cmd)
 
     if status != 0
       puts "ERROR: #{err}"
@@ -18,8 +18,8 @@ module Helpers
   end
 
   # Adapted from Bundler source code
-  def system_exec(cmd)
-    Open3.popen3(ENV, cmd) do |stdin, stdout, stderr, wait_thr|
+  def system_exec(env, cmd)
+    Open3.popen3(env, cmd) do |stdin, stdout, stderr, wait_thr|
       yield stdin, stdout, wait_thr if block_given?
 
       stdin.close

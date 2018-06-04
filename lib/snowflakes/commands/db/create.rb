@@ -1,3 +1,4 @@
+require "shellwords"
 require 'snowflakes/commands/database_config'
 
 module Snowflakes
@@ -5,8 +6,8 @@ module Snowflakes
     module Db
       class Create < DatabaseConfig
         def start
-          `createdb #{db_name}`
-          puts "=> database #{db_name} created"
+          system(postgres_cli_env_vars, "createdb #{Shellwords.escape(db_name)}")
+          puts "=> database #{db_name} created" if $?.success?
         end
       end
     end

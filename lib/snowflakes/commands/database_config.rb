@@ -15,7 +15,16 @@ module Snowflakes
       end
 
       def uri
-        URI.parse(app.container.settings[:database_url])
+        @uri ||= URI.parse(app.container.settings[:database_url])
+      end
+
+      def postgres_cli_env_vars
+        @postgres_cli_env_vars ||= {}.tap do |vars|
+          vars["PGHOST"] = uri.host.to_s
+          vars["PGPORT"] = uri.port.to_s if uri.port
+          vars["PGUSER"] = uri.user.to_s if uri.user
+          vars["PGPASSWORD"] = uri.password.to_s if uri.password
+        end
       end
     end
   end

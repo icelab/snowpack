@@ -24,14 +24,10 @@ RSpec.describe 'sf console' do
   end
 
   it 'starts a console in provided env via RACK_ENV' do
-    ENV['RACK_ENV'] = 'test'
-
-    with_command(:console) do |output|
+    with_command(:console, env: {"RACK_ENV" => "test"}) do |output|
       expect(output).to include 'dummy[test] booted'
       expect(output).to include 'dummy[test]>'
     end
-
-    ENV.delete('RACK_ENV')
   end
 
   it 'starts a console for a specific sub-app' do
