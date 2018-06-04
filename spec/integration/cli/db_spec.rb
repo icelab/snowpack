@@ -1,9 +1,9 @@
 RSpec.describe 'exe/run db' do
-  after do
-    `dropdb dummy_test > /dev/null 2>&1`
-  end
-
   describe 'create' do
+    after do
+      `dropdb dummy_test > /dev/null`
+    end
+
     it 'creates the database' do
       with_command('db create') do |output|
         expect(output).to include 'database dummy_test created'
@@ -28,6 +28,10 @@ RSpec.describe 'exe/run db' do
       `createdb dummy_test > /dev/null`
     end
 
+    after do
+      `dropdb dummy_test > /dev/null`
+    end
+
     it 'dumps the database to {root}/db/structure.sql' do
       with_command('db structure dump') do |output|
         expect(output).to include 'dummy_test structure dumped to'
@@ -40,6 +44,10 @@ RSpec.describe 'exe/run db' do
     before do
       `createdb dummy_test > /dev/null`
       FileUtils.rm(Dir["#{SPEC_ROOT}/dummy/db/migrate/*.rb"])
+    end
+
+    after do
+      `dropdb dummy_test > /dev/null`
     end
 
     it 'creates a new migration' do
@@ -57,6 +65,10 @@ RSpec.describe 'exe/run db' do
         "#{SPEC_ROOT}/fixtures/migrations/20170425120106_add_users.rb",
         "#{SPEC_ROOT}/dummy/db/migrate/",
       )
+    end
+
+    after do
+      `dropdb dummy_test > /dev/null`
     end
 
     it 'migrates db and dumps structure in development' do
@@ -85,12 +97,16 @@ RSpec.describe 'exe/run db' do
 
   describe 'reset' do
     before do
-      `createdb dummy_test &> /dev/null`
+      `createdb dummy_test > /dev/null`
 
       FileUtils.cp(
         "#{SPEC_ROOT}/fixtures/migrations/20170425120106_add_users.rb",
         "#{SPEC_ROOT}/dummy/db/migrate/",
       )
+    end
+
+    after do
+      `dropdb dummy_test > /dev/null`
     end
 
     it 'drops, creates and migrates the database' do
