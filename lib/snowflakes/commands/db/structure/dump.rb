@@ -27,7 +27,7 @@ module Snowflakes
           private
 
           def docker_compose_postgres?
-            services = `docker-compose ps --services`
+            services = `docker-compose ps --services 2>/dev/null`
             $?.success? && services.split("\n").include?("postgres")
           end
 
