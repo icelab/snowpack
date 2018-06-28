@@ -1,5 +1,6 @@
 require "dry/view/decorator"
 require "dry/view/part"
+require "inflecto"
 
 module Snowflakes
   module Web
