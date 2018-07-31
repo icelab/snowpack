@@ -13,7 +13,6 @@ Dry::System.register_component(:persistence, provider: :snowflakes) do
     require "rom/sql"
 
     use :settings
-    use :monitor
 
     ROM::SQL.load_extensions(*config.global_extensions)
 
