@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "appsignal"
+require_relative "appsignal_ext"
 require "securerandom"
 
 # Remove Appsignal's own Que integration hook, so the Snowflakes-hosted
@@ -11,6 +12,11 @@ module Snowflakes
   module Instrumentation
     module Appsignal
       module Que
+        # Enable like so:
+        #
+        # Que.error_notifier = Snowflakes::Instrumentation::Appsignal::Que::ErrorNotifier
+
+        # Actually, why is this even necessry?
         ErrorNotifier = -> error, _job {
           ::Appsignal::Transaction.current.set_error(error)
         }
@@ -29,8 +35,6 @@ module Snowflakes
                 :params => attrs[:args]
               }
 
-              should_instrument = instrument?
-
               request = ::Appsignal::Transaction::GenericRequest.new(env)
 
               transaction = ::Appsignal::Transaction.create(
@@ -39,19 +43,16 @@ module Snowflakes
                 request,
               )
 
+              transaction.discard! unless instrument?
+
               begin
                 ::Appsignal.instrument("perform_job.que") { _run_without_appsignal }
               rescue Exception => error
                 transaction.set_error(error)
-                should_instrument = true
                 raise error
               ensure
-                if should_instrument
-                  transaction.set_action "#{attrs[:job_class]}#run"
-                  ::Appsignal::Transaction.complete_current!
-                else
-                  ::Appsignal::Transaction.clear_current_transaction!
-                end
+                transaction.set_action "#{attrs[:job_class]}#run"
+                ::Appsignal::Transaction.complete_current!
               end
             end
 

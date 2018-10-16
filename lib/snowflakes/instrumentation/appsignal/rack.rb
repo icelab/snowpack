@@ -9,6 +9,7 @@
 # }
 
 require "appsignal"
+require_relative "appsignal_ext"
 require "rack"
 require "securerandom"
 
@@ -36,13 +37,13 @@ module Snowflakes
         def call_with_appsignal_monitoring(env)
           request = ::Rack::Request.new(env)
 
-          should_instrument = instrument?(request)
-
           transaction = ::Appsignal::Transaction.create(
             SecureRandom.uuid,
             ::Appsignal::Transaction::HTTP_REQUEST,
             request,
           )
+
+          transaction.discard! unless instrument?(request)
 
           begin
             ::Appsignal.instrument "process_action.generic" do
@@ -50,7 +51,6 @@ module Snowflakes
             end
           rescue Exception => error
             transaction.set_error(error)
-            should_instrument = true
             raise error
           ensure
             if env["appsignal.route"]
@@ -62,12 +62,8 @@ module Snowflakes
             transaction.set_metadata("path", request.path)
             transaction.set_metadata("method", request.request_method)
 
-            if should_instrument
-              transaction.set_http_or_background_queue_start
-              ::Appsignal::Transaction.complete_current!
-            else
-              ::Appsignal::Transaction.clear_current_transaction!
-            end
+            transaction.set_http_or_background_queue_start
+            ::Appsignal::Transaction.complete_current!
           end
         end
 
