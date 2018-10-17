@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # use Snowflakes::Instrumentation::Rack::Appsignal, {
-#   rate: 0.2,
+#   sample: 0.2,
 #   filters: {
 #     "/some/exact/route"   => 0.05,    # <- custom sample rate (5%) for specific URL
 #     %r{/another/.+/route} => false,   # <- do not instrument this URL, n.b. match via Regexp
@@ -43,7 +43,7 @@ module Snowflakes
             request,
           )
 
-          transaction.discard! unless instrument?(request)
+          transaction.discard! unless sample?(request)
 
           begin
             ::Appsignal.instrument "process_action.generic" do
@@ -67,12 +67,14 @@ module Snowflakes
           end
         end
 
-        def instrument?(request)
-          rate = options.fetch(:rate, 1)
+        def sample?(request)
+          rate = options.fetch(:sample, 1)
 
-          options.fetch(:filters, {}).each do |filter_match, filter_rate|
-            rate = filter_rate and break if request.path.match?(filter_match)
+          options.fetch(:filters, {}).each do |match, sample|
+            rate = sample and break if request.path.match?(match)
           end
+
+          rate = 1 if rate == true
 
           rate && rand <= rate
         end
