@@ -11,6 +11,11 @@ Dry::System.register_component(:persistence, provider: :snowflakes) do
 
   init do
     require "sequel"
+    begin
+      require "sequel_pg"
+    rescue LoadError
+    end
+
     require "rom"
     require "rom/sql"
 
