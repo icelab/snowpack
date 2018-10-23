@@ -5,10 +5,17 @@ Dry::System.register_component(:persistence, provider: :snowflakes) do
     key :database_url, Types::String
     key :global_extensions, Types::Array.of(Types::Symbol)
     key :connection_extensions, Types::Array.of(Types::Symbol)
+    key :auto_registration_root, Types::String.optional
+    key :auto_registration_namespace, Types::String.optional
   end
 
   init do
     require "sequel"
+    begin
+      require "sequel_pg"
+    rescue LoadError
+    end
+
     require "rom"
     require "rom/sql"
 
@@ -36,9 +43,12 @@ Dry::System.register_component(:persistence, provider: :snowflakes) do
   end
 
   start do
-    config = container["persistence.config"]
-    config.auto_registration target.root.join("lib/persistence")
+    rom_config = container["persistence.config"]
+    rom_config.auto_registration(
+      config.auto_registration_root || target.root.join("lib/persistence"),
+      namespace: config.auto_registration_namespace || true,
+    )
 
-    register "rom", ROM.container(config)
+    register "rom", ROM.container(rom_config)
   end
 end
