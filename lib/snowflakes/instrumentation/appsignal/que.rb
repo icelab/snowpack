@@ -23,7 +23,7 @@ module Snowflakes
 
         def self.included(base)
           base.class_eval do
-            def _run_with_appsignal
+            def _run_with_appsignal(*args)
               env = {
                 :metadata    => {
                   :id        => attrs[:job_id],
@@ -46,7 +46,7 @@ module Snowflakes
               transaction.discard! unless instrument?
 
               begin
-                ::Appsignal.instrument("perform_job.que") { _run_without_appsignal }
+                ::Appsignal.instrument("perform_job.que") { _run_without_appsignal(*args) }
               rescue Exception => error
                 transaction.set_error(error)
                 raise error
