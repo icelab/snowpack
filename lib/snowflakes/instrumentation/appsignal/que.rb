@@ -39,7 +39,7 @@ module Snowflakes
 
               transaction = ::Appsignal::Transaction.create(
                 SecureRandom.uuid,
-                Appsignal::Transaction::BACKGROUND_JOB,
+                ::Appsignal::Transaction::BACKGROUND_JOB,
                 request,
               )
 
