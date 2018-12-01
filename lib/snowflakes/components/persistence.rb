@@ -5,8 +5,8 @@ Dry::System.register_component(:persistence, provider: :snowflakes) do
     key :database_url, Types::String
     key :global_extensions, Types::Array.of(Types::Symbol)
     key :connection_extensions, Types::Array.of(Types::Symbol)
-    key :auto_registration_root, Types::String.optional
-    key :auto_registration_namespace, Types::String.optional
+    key :auto_registration_root, Types::String.optional.default(nil)
+    key :auto_registration_namespace, Types::String.optional.default(nil)
   end
 
   init do
