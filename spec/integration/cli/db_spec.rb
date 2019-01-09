@@ -137,6 +137,10 @@ RSpec.describe 'exe/run db' do
     end
 
     context 'when there is no sample data' do
+      before do
+        FileUtils.rm(Dir["#{SPEC_ROOT}/dummy/db/sample_data.rb"])
+      end
+
       it 'does not load sample data' do
         with_command('db sample_data') do |output|
           expect(output).to include 'app has no db sample data'
