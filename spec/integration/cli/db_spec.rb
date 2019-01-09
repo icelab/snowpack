@@ -114,4 +114,20 @@ RSpec.describe 'exe/run db' do
       end
     end
   end
+
+  describe 'sample_data' do
+    before do
+      `createdb dummy_test > /dev/null`
+    end
+
+    after do
+      `dropdb dummy_test > /dev/null`
+    end
+
+    it 'loads sample data from {root}/db/sample_data.rb' do
+      with_command('db sample_data') do |output|
+        expect(output).to include 'db sample data loaded'
+      end
+    end
+  end
 end
