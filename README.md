@@ -55,6 +55,7 @@ Commands:
   run db migrate               # Run database migrations
   run db migrate               # Run database migrations
   run db reset                 # Drop, create and migrate the database
+  run db sample_data           # Load db sample data if it exists
   run db seed                  # Load db seed if it exists
   run db structure SUBCOMMAND  # Database structure commands
   run db version               # Print schema version

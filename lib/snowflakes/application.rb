@@ -44,6 +44,14 @@ module Snowflakes
       load("#{root}/db/seed.rb")
     end
 
+    def has_db_sample_data?
+      File.exist?(db_sample_data_file)
+    end
+
+    def load_db_sample_data
+      load("#{root}/db/sample_data.rb")
+    end
+
     def precompiled_assets_path
       "#{root}/public/assets"
     end
@@ -70,6 +78,10 @@ module Snowflakes
 
     def db_seed_file
       "#{root}/db/seed.rb"
+    end
+
+    def db_sample_data_file
+      "#{root}/db/sample_data.rb"
     end
 
     def load_sub_apps

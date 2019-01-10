@@ -114,4 +114,38 @@ RSpec.describe 'exe/run db' do
       end
     end
   end
+
+  describe 'sample_data' do
+    before(:each) do
+      `createdb dummy_test > /dev/null`
+    end
+
+    after(:each) do
+      `dropdb dummy_test > /dev/null`
+    end
+
+    context 'when there is sample data' do
+      before do
+        FileUtils.touch("#{SPEC_ROOT}/dummy/db/sample_data.rb")
+      end
+
+      it 'loads sample data from {root}/db/sample_data.rb' do
+        with_command('db sample_data') do |output|
+          expect(output).to include 'db sample data loaded'
+        end
+      end
+    end
+
+    context 'when there is no sample data' do
+      before do
+        FileUtils.rm(Dir["#{SPEC_ROOT}/dummy/db/sample_data.rb"])
+      end
+
+      it 'does not load sample data' do
+        with_command('db sample_data') do |output|
+          expect(output).to include 'app has no db sample data'
+        end
+      end
+    end
+  end
 end

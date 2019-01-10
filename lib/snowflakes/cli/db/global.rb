@@ -47,6 +47,12 @@ module Snowflakes
           end
         end
 
+        with_env 'sample_data', 'Load db sample data if it exists' do
+          def sample_data
+            run('db/sample_data')
+          end
+        end
+
         with_env 'reset', 'Drop, create and migrate the database' do
           def reset
             drop
