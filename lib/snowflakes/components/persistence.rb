@@ -7,6 +7,7 @@ Dry::System.register_component(:persistence, provider: :snowflakes) do
     key :connection_extensions, Types::Array.of(Types::Symbol)
     key :auto_registration_root, Types::String.optional.default(nil)
     key :auto_registration_namespace, Types::String.optional.default(nil)
+    key :max_connections, Types::Integer.optional.default(4)
   end
 
   init do
@@ -24,6 +25,7 @@ Dry::System.register_component(:persistence, provider: :snowflakes) do
     rom_config = ROM::Configuration.new(
       :sql,
       config.database_url,
+      max_connections: config.max_connections,
       extensions: config.connection_extensions
     )
 
