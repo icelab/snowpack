@@ -4,7 +4,6 @@ require "hanami/cli"
 require "hanami/cli/command"
 require "hanami/utils/files"
 require "snowflakes/application"
-require "snowflakes/config"
 
 module Snowflakes
   class CLI < Hanami::CLI
