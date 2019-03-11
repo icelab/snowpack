@@ -12,6 +12,7 @@ module Snowflakes
       extend Hanami::CLI::Registry
 
       require_relative "commands/assets/compile"
+      require_relative "commands/console"
       require_relative "commands/db/migrate"
       require_relative "commands/db/rollback"
     end
