@@ -34,6 +34,10 @@ module Snowflakes
         gateway.connection
       end
 
+      def migrator
+        gateway.migrator
+      end
+
       def applied_migrations
         sequel_migrator.applied_migrations
       end
@@ -48,10 +52,6 @@ module Snowflakes
       end
 
       private
-
-      def migrator
-        gateway.migrator
-      end
 
       def sequel_migrator
         Sequel::TimestampMigrator.new(migrator.connection, migrator.path, {})

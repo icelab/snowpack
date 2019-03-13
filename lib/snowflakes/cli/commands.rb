@@ -13,6 +13,7 @@ module Snowflakes
 
       require_relative "commands/assets/compile"
       require_relative "commands/console"
+      require_relative "commands/db/create_migration"
       require_relative "commands/db/migrate"
       require_relative "commands/db/rollback"
       require_relative "commands/db/structure/dump"
