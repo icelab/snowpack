@@ -6,33 +6,33 @@ module Snowflakes
   class CLI < Hanami::CLI
     module Commands
       module DB
-        class Seed < Command
-          desc "Load database seeds"
+        class SampleData < Command
+          desc "Load sample data"
 
           def call(**)
             if has_file?
-              measure "Database seeds loaded" do
+              measure "Sample data loaded" do
                 application.boot
                 load file_path
               end
             else
-              out.puts "=> no database seeds available"
+              out.puts "=> no sample data available"
             end
           end
 
           private
 
           def file_path
-            File.join(application.root, "db/seed.rb")
+            File.join(application.root, "db/sample_data.rb")
           end
 
           def has_file?
-            File.exist?(seeds_path)
+            File.exist?(file_path)
           end
         end
       end
     end
 
-    register "db seed", Commands::DB::Seed
+    register "db sample_data", Commands::DB::SampleData
   end
 end
