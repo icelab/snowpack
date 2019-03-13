@@ -24,6 +24,7 @@ module Snowflakes
       require_relative "commands/db/seed"
       require_relative "commands/db/structure/dump"
       require_relative "commands/db/version"
+      require_relative "commands/routes/update"
     end
   end
 end
