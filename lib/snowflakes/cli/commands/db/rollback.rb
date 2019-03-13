@@ -11,56 +11,28 @@ module Snowflakes
           option :target, desc: "Target migration number", aliases: ["-t"]
 
           def call(target: nil, **)
-            prepare
+            migration_code, migration_name = find_migration(target)
 
-            target, migration_name = get_migration(target)
-
-            require "byebug"
-            byebug
-
-            measure "database #{database_name} rolled back to #{migration_name}" do
-              gateway.run_migrations(target: Integer(target))
+            measure "database #{application.database.name} rolled back to #{migration_name}" do
+              application.database.gateway.run_migrations(target: Integer(migration_code))
             end
           end
 
           private
 
-          def prepare
-            application.boot :persistence
-          end
-
-          def gateway
-            application.container["persistence.config"].gateways[:default]
-          end
-
-          def database_name
-            gateway.connection.url.split("/").last
-          end
-
-          def migrator
-            gateway.migrator
-          end
-
-          def sequel_migrator
-            Sequel::TimestampMigrator.new(migrator.connection, migrator.path, {})
-          end
-
-          def applied_migrations
-            sequel_migrator.applied_migrations
-          end
-
-          def get_migration(target)
-            migration =
-              if target
-                applied_migrations.detect { |m| m.split("_").first == target }
+          def find_migration(code)
+            migration = application.database.applied_migrations.yield_self { |migrations|
+              if code
+                migrations.detect { |m| m.split("_").first == code }
               else
-                applied_migrations.last
+                migrations.last
               end
+            }
 
-            target ||= migration.split("_").first
+            migration_code = code || migration.split("_").first
             migration_name = File.basename(migration, ".*")
 
-            [target, migration_name]
+            [migration_code, migration_name]
           end
         end
       end

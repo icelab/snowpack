@@ -11,29 +11,15 @@ module Snowflakes
           option :target, desc: "Target migration number", aliases: ["-t"]
 
           def call(target: nil, **)
-            prepare
+            database = application.database
 
-            measure "database #{database_name} migrated" do
+            measure "database #{database.name} migrated" do
               if target
-                gateway.run_migrations(target: target)
+                database.gateway.run_migrations(target: target)
               else
-                gateway.run_migrations
+                database.gateway.run_migrations
               end
             end
-          end
-
-          private
-
-          def prepare
-            application.boot :persistence
-          end
-
-          def gateway
-            application.container["persistence.config"].gateways[:default]
-          end
-
-          def database_name
-            gateway.connection.url.split("/").last
           end
         end
       end
