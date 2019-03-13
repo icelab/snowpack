@@ -11,6 +11,7 @@ module Snowflakes
     module Commands
       extend Hanami::CLI::Registry
 
+      require_relative "commands/assets/clobber"
       require_relative "commands/assets/compile"
       require_relative "commands/console"
       require_relative "commands/db/create"
