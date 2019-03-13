@@ -15,6 +15,7 @@ module Snowflakes
       require_relative "commands/console"
       require_relative "commands/db/migrate"
       require_relative "commands/db/rollback"
+      require_relative "commands/db/structure/dump"
     end
   end
 end

@@ -32,13 +32,21 @@ module Snowflakes
           self.class.new(
             command_name: @command_name,
             application: application,
-            out: @out,
-            files: @files,
+            out: out,
+            files: files,
           )
         end
 
         private
 
+        def run_command(klass, *args)
+          klass.new(
+            command_name: klass.name,
+            application: application,
+            out: out,
+            files: files,
+          ).call(*args)
+        end
         def measure(desc, &block)
           start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
           block.call

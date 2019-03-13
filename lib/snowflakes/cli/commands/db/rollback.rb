@@ -1,5 +1,6 @@
 require "hanami/cli"
 require "snowflakes/cli/command"
+require_relative "structure/dump"
 
 module Snowflakes
   class CLI < Hanami::CLI
@@ -16,6 +17,8 @@ module Snowflakes
             measure "database #{application.database.name} rolled back to #{migration_name}" do
               application.database.gateway.run_migrations(target: Integer(migration_code))
             end
+
+            run_command Structure::Dump
           end
 
           private

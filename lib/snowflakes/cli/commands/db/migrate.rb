@@ -1,5 +1,6 @@
 require "hanami/cli"
 require "snowflakes/cli/command"
+require_relative "structure/dump"
 
 module Snowflakes
   class CLI < Hanami::CLI
@@ -20,6 +21,8 @@ module Snowflakes
                 database.gateway.run_migrations
               end
             end
+
+            run_command Structure::Dump
           end
         end
       end
