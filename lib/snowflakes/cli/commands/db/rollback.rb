@@ -1,6 +1,7 @@
 require "hanami/cli"
 require "snowflakes/cli/command"
 require_relative "structure/dump"
+require_relative "utils/database"
 
 module Snowflakes
   class CLI < Hanami::CLI
@@ -14,8 +15,8 @@ module Snowflakes
           def call(target: nil, **)
             migration_code, migration_name = find_migration(target)
 
-            measure "database #{application.database.name} rolled back to #{migration_name}" do
-              application.database.gateway.run_migrations(target: Integer(migration_code))
+            measure "database #{database.name} rolled back to #{migration_name}" do
+              database.gateway.run_migrations(target: Integer(migration_code))
             end
 
             run_command Structure::Dump
@@ -23,8 +24,12 @@ module Snowflakes
 
           private
 
+          def database
+            @database ||= Utils::Database.for_application(application)
+          end
+
           def find_migration(code)
-            migration = application.database.applied_migrations.yield_self { |migrations|
+            migration = database.applied_migrations.yield_self { |migrations|
               if code
                 migrations.detect { |m| m.split("_").first == code }
               else

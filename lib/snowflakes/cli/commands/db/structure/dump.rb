@@ -10,15 +10,17 @@ module Snowflakes
             desc "Dumps database structure to db/structure.sql file"
 
             def call(*)
-              database = application.database
-
-              measure("#{database.name} structure dumped to db/structure.sql") do
-                cmd = "pg_dump --schema-only --no-owner #{Shellwords.escape(database.name)} > #{output_file}"
-                system(database.cli_env_vars, cmd)
+              measure("#{database_config.db_name} structure dumped to db/structure.sql") do
+                cmd = "pg_dump --schema-only --no-owner #{Shellwords.escape(database_config.db_name)} > #{output_file}"
+                system(database_config.cli_env_vars, cmd)
               end
             end
 
             private
+
+            def database_config
+              @database_config ||= Utils::DatabaseConfig.for_application(application)
+            end
 
             def output_file
               "#{application.root}/db/structure.sql"

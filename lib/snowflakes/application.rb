@@ -1,6 +1,5 @@
 require "dry/inflector"
 require "pathname"
-require_relative "application/database"
 require_relative "console/context"
 
 module Snowflakes
@@ -39,13 +38,6 @@ module Snowflakes
         boot_component(component)
       else
         boot_container
-      end
-    end
-
-    def database
-      @database ||= begin
-        boot :persistence
-        Database.new(container["persistence.config"])
       end
     end
 
