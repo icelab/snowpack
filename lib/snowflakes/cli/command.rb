@@ -12,7 +12,7 @@ module Snowflakes
         def self.inherited(klass)
           super
 
-          klass.option :env, aliases: ["-e"], default: "development", desc: "Application environment"
+          klass.option :env, aliases: ["-e"], default: nil, desc: "Application environment"
         end
 
         attr_reader :application

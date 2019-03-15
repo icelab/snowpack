@@ -7,8 +7,9 @@ module Snowflakes
     attr_reader :container
     attr_reader :sub_apps
 
-    def initialize(container, env: default_env)
+    def initialize(container, env: nil)
       @container = container
+      with_env(env || default_env)
     end
 
     def with_env(env)
