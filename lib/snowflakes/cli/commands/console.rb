@@ -13,11 +13,11 @@ module Snowflakes
           IRB
         end
 
-        desc "Opens interactive console"
+        desc "Open interactive console"
 
         def call(**)
           measure "#{prompt_prefix} booted in" do
-            puts "=> starting #{prompt_prefix} console"
+            out.puts "=> starting #{prompt_prefix} console"
             application.boot
           end
 
@@ -39,7 +39,7 @@ module Snowflakes
         end
 
         def prompt_prefix
-          "#{application.name}[#{application.env}]"
+          "#{inflector.underscore(application.name)}[#{application.env}]"
         end
       end
     end
