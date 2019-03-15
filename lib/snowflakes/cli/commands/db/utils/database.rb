@@ -9,13 +9,19 @@ module Snowflakes
           class Database
             def self.for_application(application)
               application.boot :persistence
-              new(application.container["persistence.config"])
+
+              new(
+                config: application.container["persistence.config"],
+                root_path: application.root,
+              )
             end
 
             attr_reader :config
+            attr_reader :root_path
 
-            def initialize(config)
+            def initialize(config:, root_path:)
               @config = config
+              @root_path = root_path
             end
 
             def url
@@ -39,7 +45,10 @@ module Snowflakes
             end
 
             def migrator
-              gateway.migrator
+              @migrator ||= ROM::SQL::Migration::Migrator.new(
+                connection,
+                path: File.join(root_path, "db/migrate"),
+              )
             end
 
             def applied_migrations
@@ -49,7 +58,11 @@ module Snowflakes
             private
 
             def sequel_migrator
-              Sequel::TimestampMigrator.new(migrator.connection, migrator.path, {})
+              Sequel::TimestampMigrator.new(migrator.connection, migrations_path, {})
+            end
+
+            def migrations_path
+              File.join(application.root, "db/migrate")
             end
           end
         end

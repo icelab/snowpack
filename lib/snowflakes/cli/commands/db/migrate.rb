@@ -15,9 +15,9 @@ module Snowflakes
           def call(target: nil, **)
             measure "database #{database.name} migrated" do
               if target
-                database.gateway.run_migrations(target: target)
+                run_migrations(target: target)
               else
-                database.gateway.run_migrations
+                run_migrations
               end
             end
 
@@ -25,6 +25,12 @@ module Snowflakes
           end
 
           private
+
+          def run_migrations(**options  )
+            ROM::SQL.with_gateway(database.gateway) do
+              database.migrator.run(options)
+            end
+          end
 
           def database
             @database ||= Utils::Database.for_application(application)
