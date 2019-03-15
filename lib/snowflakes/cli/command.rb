@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "dry/inflector"
 require "hanami/cli"
 require "hanami/cli/command"
 require "hanami/utils/files"
@@ -17,14 +18,16 @@ module Snowflakes
 
         attr_reader :application
         attr_reader :out
+        attr_reader :inflector
         attr_reader :files
 
         # WIP: play with injecting `out, files` from Snowflakes::CLI?
-        def initialize(command_name:, application: nil, out: $stdout, files: Hanami::Utils::Files)
+        def initialize(command_name:, application: nil, out: $stdout, inflector: Dry::Inflector.new, files: Hanami::Utils::Files)
           super(command_name: command_name)
 
           @application = application
           @out = out
+          @inflector = inflector
           @files = files
         end
 
