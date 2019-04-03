@@ -28,7 +28,6 @@ module Snowflakes
       # From dry-web
       klass.after(:configure) do
         register_rack_monitor
-        attach_listeners
       end
 
       @_mutex.synchronize do
@@ -81,13 +80,6 @@ module Snowflakes
     def self.register_rack_monitor
       return self if key?(:rack_monitor)
       register(:rack_monitor, Dry::Monitor::Rack::Middleware.new(self[:notifications]))
-      self
-    end
-
-    def self.attach_listeners
-      return unless config.listeners
-      rack_logger = Dry::Monitor::Rack::Logger.new(self[:logger])
-      rack_logger.attach(self[:rack_monitor])
       self
     end
   end
