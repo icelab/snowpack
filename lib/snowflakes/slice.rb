@@ -10,7 +10,6 @@ module Snowflakes
 
     # From dry-web, TODO remove
     setting :logger_class, Dry::Monitor::Logger
-    setting :listeners, false # TODO: work out why this is needed
 
     def self.inherited(klass)
       raise "Snowflakes.application not configured yet" unless Snowflakes.application?
