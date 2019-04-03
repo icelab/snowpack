@@ -50,6 +50,7 @@ module Snowflakes
             files: files,
           ).call(*args)
         end
+
         def measure(desc, &block)
           start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
           block.call
