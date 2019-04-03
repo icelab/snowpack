@@ -11,6 +11,10 @@ module Snowflakes
     end
   end
 
+  def self.application?
+    defined?(@_application) && @_application
+  end
+
   def self.application=(klass)
     @_mutex.synchronize do
       raise "Snowflakes.application already configured" if defined?(@_application)

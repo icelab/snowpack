@@ -13,7 +13,7 @@ module Snowflakes
 
     # From dry-web
     setting :logger_class, Dry::Monitor::Logger
-    setting :listeners, false
+    setting :listeners, false # TODO: work out why this is needed
 
     use :env, inferrer: -> { ENV.fetch('RACK_ENV', 'development').to_sym }
     use :logging
