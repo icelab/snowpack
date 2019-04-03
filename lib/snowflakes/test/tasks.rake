@@ -37,3 +37,4 @@ begin
 
   task default: [:spec]
 rescue LoadError; end
+# FIXME ^ make that way more specific

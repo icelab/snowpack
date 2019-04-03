@@ -40,6 +40,11 @@ module Snowflakes
       @slices ||= detect_slices
     end
 
+    # ....
+    def self.load_slices
+      slices
+    end
+
     def self.on_boot(&block)
       @_boot_block = block
     end

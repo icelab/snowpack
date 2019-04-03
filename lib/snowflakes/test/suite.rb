@@ -1,8 +1,7 @@
 require 'rspec/core'
 require 'json'
 
-require 'snowflakes/application'
-require 'snowflakes/config'
+require_relative "../../snowflakes"
 
 module Snowflakes
   module Test
@@ -71,15 +70,13 @@ module Snowflakes
         end
       end
 
-      def self.application
-        @__application__ ||= Application.new(Snowflakes.configure).freeze
-      end
+      attr_reader :application, :root
 
-      attr_reader :root, :app
-
-      def initialize(root = self.class.root.join('suite'))
+      def initialize(application: Snowflakes.application, root: self.class.root.join("suite"))
+        @application = application
         @root = root
-        @app = Suite.application
+
+        application.load_slices
       end
 
       def start_coverage
@@ -102,13 +99,13 @@ module Snowflakes
       end
 
       def current_coverage
-        data = JSON.load(app.root.join('coverage/.last_run.json'))
+        data = JSON.load(application.root.join('coverage/.last_run.json'))
         data.fetch('result').fetch('covered_percent').to_f.round
       end
 
       def require_containers
-        app.require_container
-        app.require_sub_app_containers
+        application.require_container
+        application.require_sub_app_containers
       end
 
       def test_group_name
@@ -116,7 +113,10 @@ module Snowflakes
       end
 
       def chdir(name)
-        self.class.new(root.join(name.to_s))
+        self.class.new(
+          application: application,
+          root: root.join(name.to_s),
+        )
       end
 
       def files
@@ -152,11 +152,11 @@ module Snowflakes
       end
 
       def log_dir
-        app.root.join("log").realpath
+        application.root.join("log").realpath
       end
 
       def tmp_dir
-        app.root.join("tmp").realpath
+        application.root.join("tmp").realpath
       end
 
       def clean_db?(example)
