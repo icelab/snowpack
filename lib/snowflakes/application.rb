@@ -35,31 +35,34 @@ module Snowflakes
     end
 
     def self.slices
-      @slices ||= detect_slices
+      @slices ||= load_slices
     end
 
-    # ....
     def self.load_slices
-      slices
+      @slices ||= Dir["#{config.root}/{apps,backend,slices}/*"].map(&method(:load_slice))
     end
 
-    def self.on_boot(&block)
-      @_boot_block = block
-    end
-
+    # We can't call this `.boot` because it is the name used for registering
+    # bootable components. (It would be good to change that)
     def self.boot!
-      @slices = detect_slices
+      return self if booted?
 
-      finalize!
+      finalize! freeze: false
 
-      @_boot_block.() if @_boot_block
+      load_slices
+      slices.each(&:boot!)
+
+      @booted = true
+
+      freeze
+      self
+    end
+
+    def self.booted?
+      @booted.equal?(true)
     end
 
     private
-
-    def self.detect_slices
-      Dir["#{config.root}/{apps,backend,slices}/*"].map(&method(:load_slice))
-    end
 
     def self.load_slice(base_path)
       base_path = Pathname(base_path)

@@ -18,5 +18,9 @@ module Snowflakes
 
       super
     end
+
+    def self.boot!
+      finalize!
+    end
   end
 end
