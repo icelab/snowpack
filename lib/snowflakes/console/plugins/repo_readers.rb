@@ -3,10 +3,10 @@ module Snowflakes
     module Plugins
       class RepoReaders < Module
         def initialize(ctx)
-          ctx.apps.map { |a| a::Container }.each_with_object({}) do |app_container, memo|
-            app_container.keys.grep(/repositories/).each do |key|
+          ctx.application.slices.each_with_object({}) do |slice, memo|
+            slice.keys.grep(/repositories/).each do |key|
               name = :"#{Inflecto.singularize(key.split('.').last)}_repo"
-              repo = app_container[key]
+              repo = slice[key]
 
               define_method(name) do
                 repo

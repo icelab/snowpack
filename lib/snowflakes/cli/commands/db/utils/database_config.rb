@@ -8,7 +8,7 @@ module Snowflakes
         module Utils
           class DatabaseConfig
             def self.for_application(application)
-              new(application.container[:settings].database_url)
+              new(application[:settings].database_url)
             end
 
             attr_reader :url

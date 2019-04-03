@@ -1,97 +1,89 @@
 require "dry/inflector"
+require "dry/monitor" # from dry-web
+require "dry/system/container"
+require "dry/system/components"
 require "pathname"
-require_relative "console/context"
+require_relative "../snowflakes"
+
+Dry::Monitor.load_extensions :rack # from dry-web
 
 module Snowflakes
-  class Application
-    attr_reader :container
-    attr_reader :sub_apps
+  class Application < Dry::System::Container
+    setting :inflector, Dry::Inflector.new, reader: true
 
-    def initialize(container, env: nil)
-      @container = container
-      with_env(env || default_env)
-    end
+    # From dry-web
+    setting :logger_class, Dry::Monitor::Logger
+    setting :listeners, false
 
-    def with_env(env)
-      container.config.env = env
-      self
-    end
+    use :env, inferrer: -> { ENV.fetch('RACK_ENV', 'development').to_sym }
+    use :logging
+    use :notifications
+    use :monitoring
 
-    # FIXME this is pretty gross
-    def name
-      container.name.sub("::#{inflector.demodulize(container.name)}", "")
-    end
+    @_mutex = Mutex.new
 
-    def root
-      container.config.root
-    end
+    def self.inherited(klass)
+      super
 
-    def env
-      container.config.env
-    end
-
-    def context
-      Console::Context.new(container, sub_apps)
-    end
-
-    def boot(component = nil)
-      if component
-        boot_component(component)
-      else
-        boot_container
+      # From dry-web
+      klass.after(:configure) do
+        register_rack_monitor
+        attach_listeners
       end
+
+      @_mutex.synchronize do
+        Snowflakes.application = klass
+      end
+    end
+
+    def self.slices
+      @slices ||= detect_slices
+    end
+
+    def self.on_boot(&block)
+      @_boot_block = block
+    end
+
+    def self.boot!
+      @slices = detect_slices
+
+      finalize!
+
+      @_boot_block.() if @_boot_block
     end
 
     private
 
-    def default_env
-      ENV.fetch("RACK_ENV") { "development" }
+    def self.detect_slices
+      Dir["#{config.root}/{apps,backend,slices}/*"].map(&method(:load_slice))
     end
 
-    def boot_container
-      require boot_file_path
-      load_sub_apps
+    def self.load_slice(base_path)
+      base_path = Pathname(base_path)
+      full_defn_path = Dir["#{base_path}/system/**/container.rb"].first # TODO rename to "slice.rb"
+
+      require full_defn_path
+
+      const_path = Pathname(full_defn_path)
+        .relative_path_from(base_path.join("system")).to_s
+        .yield_self { |path| path.sub(/#{File.extname(path)}$/, "") }
+
+      inflector.constantize(inflector.camelize(const_path))
     end
 
-    def boot_component(name)
-      container.init(name)
+    # From dry-web
+
+    def self.register_rack_monitor
+      return self if key?(:rack_monitor)
+      register(:rack_monitor, Dry::Monitor::Rack::Middleware.new(self[:notifications]))
+      self
     end
 
-    def boot_file_path
-      path = Dir["#{system_path}/**/*.rb"].detect { |f| f.include?("boot.rb") }
-
-      path or raise "Couldn't find boot.rb for #{container}"
-    end
-
-    def load_sub_apps
-      @sub_apps ||=
-        begin
-          sub_app_names.map do |path|
-            begin
-              constantize("#{name}/#{Pathname(path).basename}")
-            rescue NameError
-              constantize(Pathname(path).basename.to_s)
-            end
-          end
-        end
-    end
-
-    def sub_app_names
-      Dir["#{root}/apps/*"].map { |path| Pathname(path).basename }
-    end
-
-    def system_path
-      File.join(root, container.config.system_dir)
-    end
-
-    def constantize(name)
-      inflector.constantize(inflector.camelize(name))
-    end
-
-    # TODO support injecting this into the CLI
-    # Or somehow fetching it from the container, with a fallback
-    def inflector
-      @inflector ||= Dry::Inflector.new
+    def self.attach_listeners
+      return unless config.listeners
+      rack_logger = Dry::Monitor::Rack::Logger.new(self[:logger])
+      rack_logger.attach(self[:rack_monitor])
+      self
     end
   end
 end

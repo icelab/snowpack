@@ -8,10 +8,10 @@ module Snowflakes
         module Utils
           class Database
             def self.for_application(application)
-              application.boot :persistence
+              application.init :persistence
 
               new(
-                config: application.container["persistence.config"],
+                config: application["persistence.config"],
                 root_path: application.root,
               )
             end
