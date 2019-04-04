@@ -2,21 +2,24 @@ require_relative "../snowflakes"
 
 module Snowflakes
   class Slice < Dry::System::Container
-    # TODO: propagate from Snowflakes.application instead
     use :env, inferrer: -> { ENV.fetch('RACK_ENV', 'development').to_sym }
-    use :logging
-    use :notifications
-    use :monitoring
-
-    # From dry-web, TODO remove
-    setting :logger_class, Dry::Monitor::Logger
 
     def self.inherited(klass)
+      super
+
       raise "Snowflakes.application not configured yet" unless Snowflakes.application?
 
-      # TODO: DO MORE TO WIRE THINGS UP
+      Snowflakes.application.tap do |app|
+        klass.config.env = app.env
+        klass.config.auto_register = %w[lib]
 
-      super
+        klass.register :logger, app[:logger]
+        klass.register :rack_monitor, app[:rack_monitor] # do we need?
+      end
+
+      klass.after :configure do
+        klass.load_paths! "lib"
+      end
     end
 
     def self.boot!

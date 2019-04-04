@@ -29,6 +29,8 @@ module Snowflakes
         register_rack_monitor
       end
 
+      klass.load_paths! "lib"
+
       @_mutex.synchronize do
         Snowflakes.application = klass
       end
