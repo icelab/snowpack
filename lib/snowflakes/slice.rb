@@ -19,7 +19,7 @@ module Snowflakes
         klass.config.name = klass.slice_name.to_sym
         klass.config.root = Pathname(File.join(Dir.pwd, "slices", klass.slice_name))
         klass.config.auto_register = [File.join("lib", klass.slice_namespace_path)]
-        klass.config.default_namespace = klass.slice_namespace_path
+        klass.config.default_namespace = klass.slice_namespace_identifier_prefix
 
         klass.import application: app
 
@@ -62,6 +62,10 @@ module Snowflakes
 
     def self.slice_namespace_path
       inflector.underscore(slice_namespace.to_s)
+    end
+
+    def self.slice_namespace_identifier_prefix
+      slice_namespace_path.gsub("/", ".")
     end
 
     def self.slice_name
