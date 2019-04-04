@@ -7,18 +7,20 @@ module Snowflakes
     def self.inherited(klass)
       super
 
-      raise "Snowflakes.application not configured yet" unless Snowflakes.application?
+      if base.superclass == Snowflakes::Slice
+        raise "Snowflakes.application not configured yet" unless Snowflakes.application?
 
-      Snowflakes.application.tap do |app|
-        klass.config.env = app.env
-        klass.config.auto_register = %w[lib]
+        Snowflakes.application.tap do |app|
+          klass.config.env = app.env
+          klass.config.auto_register = %w[lib]
 
-        klass.register :logger, app[:logger]
-        klass.register :rack_monitor, app[:rack_monitor] # do we need?
-      end
+          klass.register :logger, app[:logger]
+          klass.register :rack_monitor, app[:rack_monitor] # do we need?
+        end
 
-      klass.after :configure do
-        klass.load_paths! "lib"
+        klass.after :configure do
+          klass.load_paths! "lib"
+        end
       end
     end
 
