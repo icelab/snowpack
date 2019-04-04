@@ -21,7 +21,7 @@ module Snowflakes
         klass.config.auto_register = [File.join("lib", klass.slice_namespace_path)]
         klass.config.default_namespace = klass.slice_namespace_path
 
-        klass.import core: app
+        klass.import application: app
 
         klass.after :configure do
           klass.load_paths! "lib"
