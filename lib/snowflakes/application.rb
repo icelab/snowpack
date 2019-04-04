@@ -26,6 +26,7 @@ module Snowflakes
 
       # From dry-web
       klass.after(:configure) do
+        register_inflector
         register_rack_monitor
       end
 
@@ -41,7 +42,7 @@ module Snowflakes
     end
 
     def self.load_slices
-      @slices ||= Dir["#{config.root}/{apps,backend,slices}/*"].map(&method(:load_slice))
+      @slices ||= Dir["#{config.root}/slices/*"].map(&method(:load_slice))
     end
 
     # We can't call this `.boot` because it is the name used for registering
@@ -79,7 +80,10 @@ module Snowflakes
       inflector.constantize(inflector.camelize(const_path))
     end
 
-    # From dry-web
+    def self.register_inflector
+      return self if key?(:inflector)
+      register :inflector, inflector
+    end
 
     def self.register_rack_monitor
       return self if key?(:rack_monitor)
