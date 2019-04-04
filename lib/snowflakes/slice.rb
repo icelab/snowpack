@@ -15,10 +15,6 @@ module Snowflakes
 
         klass.instance_variable_set :@application, app
 
-        klass.register :inflector, app[:inflector]
-        klass.register :logger, app[:logger]
-        klass.register :rack_monitor, app[:rack_monitor] # do we need this?
-
         klass.config.env = app.env
         klass.config.name = klass.slice_name.to_sym
         klass.config.root = Pathname(File.join(Dir.pwd, "slices", klass.slice_name))
@@ -56,10 +52,6 @@ module Snowflakes
       end
     end
 
-    def self.inflector
-      self[:inflector]
-    end
-
     private
 
     MODULE_DELIMITER = "::"
@@ -74,6 +66,10 @@ module Snowflakes
 
     def self.slice_name
       inflector.underscore(slice_namespace.to_s.split(MODULE_DELIMITER).last)
+    end
+
+    def self.inflector
+      application[:inflector]
     end
   end
 end
