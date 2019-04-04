@@ -42,7 +42,7 @@ module Snowflakes
     end
 
     def self.load_slices
-      @slices ||= Dir["#{config.root}/slices/*"].map(&method(:load_slice))
+      @slices ||= Dir["#{config.root}/slices/*"].map(&method(:load_slice)).to_h
     end
 
     # We can't call this `.boot` because it is the name used for registering
@@ -53,7 +53,7 @@ module Snowflakes
       finalize! freeze: false
 
       load_slices
-      slices.each(&:boot!)
+      slices.values.each(&:boot!)
 
       @booted = true
 
@@ -77,7 +77,9 @@ module Snowflakes
         .relative_path_from(base_path.join("system")).to_s
         .yield_self { |path| path.sub(/#{File.extname(path)}$/, "") }
 
-      inflector.constantize(inflector.camelize(const_path))
+      const = inflector.constantize(inflector.camelize(const_path))
+
+      [File.basename(base_path).to_sym, const]
     end
 
     def self.register_inflector

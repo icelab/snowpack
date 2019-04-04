@@ -13,6 +13,8 @@ module Snowflakes
 
         app = Snowflakes.application
 
+        klass.instance_variable_set :@application, app
+
         klass.register :inflector, app[:inflector]
         klass.register :logger, app[:logger]
         klass.register :rack_monitor, app[:rack_monitor] # do we need this?
@@ -23,14 +25,35 @@ module Snowflakes
         klass.config.auto_register = [File.join("lib", klass.slice_namespace_path)]
         klass.config.default_namespace = klass.slice_namespace_path
 
+        klass.import core: app
+
         klass.after :configure do
           klass.load_paths! "lib"
         end
       end
     end
 
+    def self.import_slice(*slices)
+      @slice_imports ||= []
+      @slice_imports += slices
+      @slice_imports.uniq!
+      self
+    end
+
+    def self.application
+      @application
+    end
+
     def self.boot!
       finalize!
+    end
+
+    def self.finalize!
+      super do
+        Array(@slice_imports).each do |slice|
+          import slice => application.slices.fetch(slice)
+        end
+      end
     end
 
     def self.inflector
