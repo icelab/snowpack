@@ -13,7 +13,7 @@ module Snowflakes
             db_name = database_config.db_name
 
             system(database_config.cli_env_vars, "dropdb #{Shellwords.escape(db_name)}")
-            puts "=> database #{db_name} dropped" if $?.success?
+            out.puts "=> database #{db_name} dropped" if $?.success?
           end
 
           private

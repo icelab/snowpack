@@ -10,7 +10,7 @@ module Snowflakes
 
           def call(**)
             FileUtils.rm_rf(compiled_assets_path)
-            puts "=> assets removed from #{compiled_assets_path}"
+            out.puts "=> assets removed from #{compiled_assets_path}"
           end
 
           private
