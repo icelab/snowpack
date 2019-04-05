@@ -6,9 +6,6 @@ addons:
   postgresql: 9.5
 services:
   - postgresql
-before_script:
-  - mkdir -p spec/dummy/db/migrate
-bundler_args: --without yard guard benchmarks tools
 script: "bundle exec rake spec"
 rvm:
   - 2.5.0

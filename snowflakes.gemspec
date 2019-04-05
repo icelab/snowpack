@@ -6,21 +6,12 @@ require 'snowflakes/version'
 Gem::Specification.new do |spec|
   spec.name          = "snowflakes"
   spec.version       = Snowflakes::VERSION
-  spec.authors       = ["Piotr Solnica"]
-  spec.email         = ["piotr@icelab.com.au"]
+  spec.authors       = ["Tim Riley", "Piotr Solnica"]
+  spec.email         = ["tim@icelab.com.au", "piotr@icelab.com.au"]
 
   spec.summary       = %{A summary}
   spec.description   = %q{A description}
   spec.homepage      = "https://github.com/icelab/snowflakes"
-
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
-  end
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
@@ -29,8 +20,12 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "thor", "~> 0.19"
-  spec.add_runtime_dependency "dry-configurable", "~> 0.6"
+  spec.add_runtime_dependency "dry-monitor"
+  spec.add_runtime_dependency "dry-system"
+  spec.add_runtime_dependency "dry-inflector"
+  spec.add_runtime_dependency "hanami-cli"
+  spec.add_runtime_dependency "hanami-utils"
+  spec.add_runtime_dependency "rack"
 
   spec.add_development_dependency "bundler", "~> 1.14"
   spec.add_development_dependency "rake", "~> 10.0"

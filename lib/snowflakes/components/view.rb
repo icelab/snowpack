@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "snowflakes/web/decorator"
 
 Dry::System.register_component(:view, provider: :snowflakes) do

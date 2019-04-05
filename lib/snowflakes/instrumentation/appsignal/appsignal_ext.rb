@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "appsignal"
 
 Appsignal::Transaction.class_eval do

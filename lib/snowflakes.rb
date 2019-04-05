@@ -1,10 +1,27 @@
-require "snowflakes/version"
-require "pathname"
+# frozen_string_literal: true
+
+require_relative "snowflakes/version"
 
 module Snowflakes
-  SF_EXE_PATH = Pathname(__FILE__).dirname.join('../exe/sf').freeze
+  @_mutex = Mutex.new
 
-  def self.cli_exec_file
-    SF_EXE_PATH
+  def self.application
+    @_mutex.synchronize do
+      raise "Snowflakes.application not configured" unless defined?(@_application)
+
+      @_application
+    end
+  end
+
+  def self.application?
+    defined?(@_application) && @_application
+  end
+
+  def self.application=(klass)
+    @_mutex.synchronize do
+      raise "Snowflakes.application already configured" if defined?(@_application)
+
+      @_application = klass unless klass.name.nil?
+    end
   end
 end

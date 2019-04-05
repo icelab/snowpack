@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "dry/view/part"
 require "rack/utils"
 require "uri"

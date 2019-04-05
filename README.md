@@ -6,7 +6,7 @@ This project **is not ready for public usage** and it's **not open for contribut
 
 [![Build Status](https://travis-ci.org/icelab/snowflakes.svg?branch=master)](https://travis-ci.org/icelab/snowflakes)
 
-Snowflakes is a collection of development tools and common dry-web application components shared across Icelab's applications.
+Snowflakes is a collection of development tools and common dry-system application components shared across Icelab's applications.
 
 ## Installation
 
