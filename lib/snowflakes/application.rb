@@ -12,7 +12,7 @@ Dry::Monitor.load_extensions :rack # from dry-web
 module Snowflakes
   class Application < Dry::System::Container
     setting :inflector, Dry::Inflector.new, reader: true
-    setting :slices_dir, "slices".freeze
+    setting :slices_dir, "slices"
 
     # From dry-web
     setting :logger_class, Dry::Monitor::Logger

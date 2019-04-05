@@ -111,7 +111,7 @@ module Snowflakes
       end
 
       def test_group_name
-        @__test_group_name__ ||= "test_suite_#{build_idx}".freeze
+        @__test_group_name__ ||= "test_suite_#{build_idx}"
       end
 
       def chdir(name)
