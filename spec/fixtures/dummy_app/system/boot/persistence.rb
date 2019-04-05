@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Dummy::Application.boot :persistence, namespace: true do |container|
   init do
     require "rom"

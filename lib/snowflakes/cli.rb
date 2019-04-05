@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "hanami/cli"
 require_relative "../snowflakes"
 require_relative "cli/commands"

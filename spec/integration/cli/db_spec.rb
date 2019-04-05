@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe "commands / db" do
   describe "create" do
     after do

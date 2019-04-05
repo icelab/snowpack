@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "hanami/cli"
 require "snowflakes/cli/command"
 require_relative "utils/database_config"

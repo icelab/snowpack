@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Helpers
   def with_command(command, env: {})
     cmd = "#{SPEC_ROOT}/fixtures/run #{command}"

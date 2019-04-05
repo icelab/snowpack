@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "dry/inflector"
 require "dry/monitor" # from dry-web
 require "dry/system/container"

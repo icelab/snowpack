@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "snowflakes/config"
 
 Snowflakes.configure do |c|

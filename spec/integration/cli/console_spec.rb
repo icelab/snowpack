@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe "commands / console" do
   before do
     `createdb dummy_test > /dev/null`

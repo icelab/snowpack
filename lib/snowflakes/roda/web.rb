@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 
 # TODO wrap in begin/rescue loaderror and raise a meaningful exception
 require "roda"
