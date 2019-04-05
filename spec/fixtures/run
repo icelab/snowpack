@@ -3,6 +3,6 @@
 
 require "bundler/setup"
 require "snowflakes/cli"
-require_relative "dummy_app/system/dummy/container"
+require_relative "dummy_app/system/dummy/application"
 
-Snowflakes::CLI.new(container: Dummy::Container).call
+Snowflakes::CLI.new.call

@@ -12,7 +12,7 @@ module Snowflakes
           def call(**)
             if has_file?
               measure "Sample data loaded" do
-                application.boot
+                application.boot!
                 load file_path
               end
             else

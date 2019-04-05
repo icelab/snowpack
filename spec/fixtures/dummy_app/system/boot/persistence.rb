@@ -1,7 +1,7 @@
-Dummy::Container.boot :persistence, namespace: true do |container|
+Dummy::Application.boot :persistence, namespace: true do |container|
   init do
     require "rom"
-    register "config", ROM::Configuration.new(:sql, Dummy::Container[:settings].database_url)
+    register "config", ROM::Configuration.new(:sql, container[:settings].database_url)
   end
 
   start do
