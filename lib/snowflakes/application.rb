@@ -74,7 +74,7 @@ module Snowflakes
 
     def self.load_slice(base_path)
       base_path = Pathname(base_path)
-      full_defn_path = Dir["#{base_path}/system/**/container.rb"].first # TODO rename to "slice.rb"
+      full_defn_path = Dir["#{base_path}/system/**/slice.rb"].first
 
       require full_defn_path
 
