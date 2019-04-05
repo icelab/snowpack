@@ -6,8 +6,8 @@ require 'snowflakes/version'
 Gem::Specification.new do |spec|
   spec.name          = "snowflakes"
   spec.version       = Snowflakes::VERSION
-  spec.authors       = ["Piotr Solnica"]
-  spec.email         = ["piotr@icelab.com.au"]
+  spec.authors       = ["Tim Riley", "Piotr Solnica"]
+  spec.email         = ["tim@icelab.com.au", "piotr@icelab.com.au"]
 
   spec.summary       = %{A summary}
   spec.description   = %q{A description}
