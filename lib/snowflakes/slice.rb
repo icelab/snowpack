@@ -17,9 +17,11 @@ module Snowflakes
 
         klass.config.env = app.env
         klass.config.name = klass.slice_name.to_sym
-        klass.config.root = Pathname(File.join(Dir.pwd, "slices", klass.slice_name))
         klass.config.auto_register = [File.join("lib", klass.slice_namespace_path)]
         klass.config.default_namespace = klass.slice_namespace_identifier_prefix
+
+        slice_path = File.join(app.config.root, app.config.slices_dir, klass.slice_name)
+        klass.config.root = slice_path if File.directory?(slice_path)
 
         klass.import application: app
 

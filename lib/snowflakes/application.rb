@@ -10,6 +10,7 @@ Dry::Monitor.load_extensions :rack # from dry-web
 module Snowflakes
   class Application < Dry::System::Container
     setting :inflector, Dry::Inflector.new, reader: true
+    setting :slices_dir, "slices".freeze
 
     # From dry-web
     setting :logger_class, Dry::Monitor::Logger
@@ -42,7 +43,9 @@ module Snowflakes
     end
 
     def self.load_slices
-      @slices ||= Dir["#{config.root}/slices/*"].map(&method(:load_slice)).to_h
+      @slices ||= Dir[File.join(config.root, config.slices_dir, "*")]
+        .map(&method(:load_slice))
+        .to_h
     end
 
     # We can't call this `.boot` because it is the name used for registering
