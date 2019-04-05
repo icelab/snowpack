@@ -16,4 +16,9 @@ RSpec.configure do |config|
   end
 
   config.include(Helpers)
+
+  config.before :suite do
+    # This is set by default on Travis CI, but it doesn't help us here.
+    ENV.delete("RACK_ENV")
+  end
 end
