@@ -1,0 +1,21 @@
+#!/bin/sh
+# bootstrap script - install or update project dependencies
+set -e
+
+cd "$(dirname "$0")/.."
+
+if [ "$(uname -s)" = "Darwin" ]; then
+  brew bundle check >/dev/null 2>&1  || {
+    echo "==> Installing Homebrew dependencies…"
+    brew bundle
+  }
+
+  echo "==> Installing package versions…"
+  brew bootstrap-asdf
+fi
+
+bundle check >/dev/null 2>&1 || {
+  echo "==> Installing gem dependencies…"
+  bundle install --quiet
+}
+
