@@ -27,6 +27,7 @@ module Snowflakes
 
         klass.import application: app
 
+        # FIXME: why can't this be done earlier?
         klass.after :configure do
           klass.load_paths! "lib"
         end
@@ -49,6 +50,9 @@ module Snowflakes
     end
 
     def self.finalize!
+      # Force `after :configure` hooks to run
+      configure do; end
+
       super do
         Array(@slice_imports).each do |slice|
           import slice => application.slices.fetch(slice)
