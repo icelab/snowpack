@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
-require 'dry/system'
+require "dry/system"
+require "snowflakes/types"
 
 Dry::System.register_component(:persistence, provider: :snowflakes) do
   settings do
-    key :database_url, Types::String
-    key :global_extensions, Types::Array.of(Types::Symbol)
-    key :connection_extensions, Types::Array.of(Types::Symbol)
-    key :auto_registration_root, Types::String.optional.default(nil)
-    key :auto_registration_namespace, Types::String.optional.default(nil)
-    key :max_connections, Types::Integer.optional.default(4)
+    types = Snowflakes::Types
+
+    key :database_url, types::String
+    key :global_extensions, types::Array.of(types::Symbol)
+    key :connection_extensions, types::Array.of(types::Symbol)
+    key :auto_registration_root, types::String.optional.default(nil)
+    key :auto_registration_namespace, types::String.optional.default(nil)
+    key :max_connections, types::Integer.optional.default(4)
   end
 
   init do

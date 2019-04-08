@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-require 'dry/system'
+require "dry/system"
+require "snowflakes/types"
 
 Dry::System.register_component(:formalist, provider: :snowflakes) do
   settings do
-    key :embedded_forms_container, Types::Any
-    key :embedded_forms, Types::Strict::Hash
+    key :embedded_forms_container, Snowflakes::Types::Any
+    key :embedded_forms, Snowflakes::Types::Hash
   end
 
   init do

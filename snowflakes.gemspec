@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "dry-monitor"
   spec.add_runtime_dependency "dry-system"
   spec.add_runtime_dependency "dry-inflector"
+  spec.add_runtime_dependency "dry-types", "~> 0.15", ">= 0.15.0"
   spec.add_runtime_dependency "hanami-cli"
   spec.add_runtime_dependency "hanami-utils"
   spec.add_runtime_dependency "rack"
