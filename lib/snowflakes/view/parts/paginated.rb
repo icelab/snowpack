@@ -5,7 +5,7 @@ require "dry/view/part"
 module Snowflakes
   module View
     module Parts
-      class PaginatedResults < Dry::View::Part
+      class Paginated < Dry::View::Part
         attr_reader :pager
 
         def initialize(pager:, **part_args)
