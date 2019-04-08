@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
+require "dry/inflector"
 require "dry/view/decorator"
 require "dry/view/part"
-require "inflecto"
 
 module Snowflakes
   module Web
     class Decorator
+      attr_reader :inflector
       attr_reader :parts
 
-      def initialize
+      def initialize(inflector: Dry::Inflector.new)
+        @inflector = inflector
         @parts = {}
       end
 
@@ -29,7 +31,7 @@ module Snowflakes
       def decorate_array(name, value, renderer:, context:, **options)
         klass = part_class(name, value, **options)
 
-        singular_name = Inflecto.singularize(name).to_sym
+        singular_name = inflector.singularize(name).to_sym
         singular_options = singularize_options(options)
 
         arr = value.to_ary.map { |obj|
