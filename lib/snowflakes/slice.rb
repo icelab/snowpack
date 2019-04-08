@@ -23,14 +23,12 @@ module Snowflakes
         klass.config.default_namespace = klass.slice_namespace_identifier_prefix
 
         slice_path = File.join(app.config.root, app.config.slices_dir, klass.slice_name)
-        klass.config.root = slice_path if File.directory?(slice_path)
-
-        klass.import application: app
-
-        # FIXME: why can't this be done earlier?
-        klass.after :configure do
+        if File.directory?(slice_path)
+          klass.config.root = slice_path if File.directory?(slice_path)
           klass.load_paths! "lib"
         end
+
+        klass.import application: app
       end
     end
 
