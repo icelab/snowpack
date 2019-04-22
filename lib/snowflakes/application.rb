@@ -6,6 +6,7 @@ require "dry/system/container"
 require "dry/system/components"
 require "pathname"
 require_relative "../snowflakes"
+require_relative "web/application"
 
 Dry::Monitor.load_extensions :rack # from dry-web
 
@@ -50,6 +51,19 @@ module Snowflakes
         .to_h
     end
 
+    def self.routes(&block)
+      if block
+        @routes = block
+      else
+        @routes
+      end
+    end
+
+    def self.web_application
+      # TODO: raise error if not booted, tell the user to boot up
+      @web_application
+    end
+
     # We can't call this `.boot` because it is the name used for registering
     # bootable components. (It would be good to change that)
     def self.boot!
@@ -61,6 +75,7 @@ module Snowflakes
       slices.values.each(&:boot!)
 
       @booted = true
+      @web_application = Web::Application.new(self)
 
       freeze
       self
