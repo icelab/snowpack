@@ -6,21 +6,20 @@ require_relative "router"
 module Snowflakes
   module Web
     class Application
-      def initialize(application)
+      def initialize(application, &routes)
         # TODO: support passing config from application?
         resolver = EndpointResolver.new(application: application)
 
-        # TODO: can we make this cleaner somehow? via application settings?
-        configuration = application.key?(key = "web.action.configuration") ? application[key] : Hanami::Controller::Configuration.new
-
         router = Router.new(
           endpoint_resolver: resolver,
-          configuration: configuration,
-          &application.routes
+          configuration: resolve_configuration(application),
+          &routes
         )
 
         @app = Rack::Builder.new do
-          # TODO: load middleware, from application config
+          router.middlewares.each do |(*middleware, block)|
+            use(*middleware, &block)
+          end
 
           run router
         end
@@ -28,6 +27,17 @@ module Snowflakes
 
       def call(env)
         @app.call(env)
+      end
+
+      private
+
+      def resolve_configuration(application)
+        # TODO: can we make this cleaner somehow? via application settings?
+        if application.key?(key = "web.action.configuration")
+          application[key]
+        else
+          Hanami::Controller::Configuration.new
+        end
       end
     end
   end

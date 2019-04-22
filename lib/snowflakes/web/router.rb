@@ -3,9 +3,16 @@ require "hanami/router"
 module Snowflakes
   module Web
     class Router < Hanami::Router
+      attr_reader :middlewares
+
       def initialize(**options, &block)
         @options = options
+        @middlewares = []
         super
+      end
+
+      def use(*args, &block)
+        middlewares << (args << block)
       end
 
       def mount(app, at:, host: nil, &block)
