@@ -17,6 +17,8 @@ module Snowflakes
         )
 
         @app = Rack::Builder.new do
+          use application[:rack_monitor]
+
           router.middlewares.each do |(*middleware, block)|
             use(*middleware, &block)
           end

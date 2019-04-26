@@ -11,6 +11,13 @@ module Snowflakes
         super
       end
 
+      # Ensure we always return a rack-conformant result (sometimes we get a
+      # Hanami::Action::Response here, when we actually want the standard rack
+      # 3-compoment array)
+      def call(*)
+        super.to_a
+      end
+
       def use(*args, &block)
         middlewares << (args << block)
       end
@@ -29,6 +36,7 @@ module Snowflakes
         end
       end
 
+      # Allow router objects to be mounted within themselves
       def match?(env)
         match_path?(env)
       end
