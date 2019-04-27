@@ -1,14 +1,12 @@
 require "rack"
 require "hanami/controller"
-require_relative "endpoint_resolver"
 require_relative "router"
 
 module Snowflakes
   module Web
     class Application
       def initialize(application, &routes)
-        # TODO: support passing config from application?
-        resolver = EndpointResolver.new(application: application)
+        resolver = application.config.web.routing.endpoint_resolver
 
         router = Router.new(
           application: application,

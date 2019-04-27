@@ -1,4 +1,5 @@
 require "dry/system/plugins"
+require_relative "endpoint_resolver"
 require_relative "rack_logger"
 
 module Snowflakes
@@ -8,6 +9,10 @@ module Snowflakes
         super
 
         system.setting :web do
+          setting :routing do
+            setting(:endpoint_resolver, EndpointResolver) { |resolver| resolver.new(application: system) }
+          end
+
           setting :logging do
             setting :filter_params, %w[_csrf password password_confirmation]
           end
