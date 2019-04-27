@@ -47,7 +47,6 @@ module Snowflakes
     # We can't call this `.boot` because it is the name used for registering
     # bootable components. (It would be good to change that)
     def self.boot!
-      puts "BOOTING"
       return self if booted?
 
       finalize! freeze: false
