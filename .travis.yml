@@ -1,15 +1,16 @@
-language: ruby
 dist: trusty
 sudo: required
+language: ruby
 cache: bundler
 addons:
   postgresql: 9.5
 services:
   - postgresql
-script: "bundle exec rake spec"
+script:
+  - bundle exec rake spec
 rvm:
-  - 2.5.0
+  - 2.6.2
 notifications:
-    on_success: change
-    on_failure: always
+    on_success: false
+    on_failure: false
     on_start: false
