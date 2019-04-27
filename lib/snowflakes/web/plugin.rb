@@ -7,8 +7,10 @@ module Snowflakes
       def self.extended(system)
         super
 
-        system.setting :logging do
-          setting :filter_params, %w[_csrf password password_confirmation]
+        system.setting :web do
+          setting :logging do
+            setting :filter_params, %w[_csrf password password_confirmation]
+          end
         end
 
         system.after :configure do
@@ -24,7 +26,7 @@ module Snowflakes
       end
 
       def attach_rack_logger
-        RackLogger.new(self[:logger], filter_params: config.logging.filter_params).attach(self[:rack_monitor])
+        RackLogger.new(self[:logger], filter_params: config.web.logging.filter_params).attach(self[:rack_monitor])
         self
       end
     end
