@@ -11,6 +11,7 @@ module Snowflakes
         resolver = EndpointResolver.new(application: application)
 
         router = Router.new(
+          application: application,
           endpoint_resolver: resolver,
           configuration: resolve_configuration(application),
           &routes

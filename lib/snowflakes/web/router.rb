@@ -5,10 +5,20 @@ module Snowflakes
     class Router < Hanami::Router
       attr_reader :middlewares
 
-      def initialize(**options, &block)
+      def initialize(application:, **options, &block)
+        @application = application
         @options = options
         @middlewares = []
-        super
+
+        super(**options, &nil)
+        instance_exec(application, &block) if block
+        freeze overridden: true
+      end
+
+      # Do nothing when the superclass calls freeze during its own initialize
+      # (we need to do it later, after our instance_exec of the routes block)
+      def freeze(overridden: false)
+        super() if overridden
       end
 
       # Ensure we always return a rack-conformant result (sometimes we get a
@@ -25,6 +35,7 @@ module Snowflakes
       def mount(app, at:, host: nil, &block)
         if app.is_a?(Symbol) && (sliced_resolver = @endpoint_resolver.sliced(app))
           sliced_router = self.class.new(
+            application: @application.slices[app],
             **@options,
             endpoint_resolver: sliced_resolver,
             &block
