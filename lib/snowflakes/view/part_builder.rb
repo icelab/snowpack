@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "dry/view/part_builder"
 require "snowflakes/view/parts/pager"
 require_relative "parts/paginated"

@@ -14,9 +14,6 @@ module Snowflakes
     setting :inflector, Dry::Inflector.new, reader: true
     setting :slices_dir, "slices"
 
-    # From dry-web
-    setting :logger_class, Dry::Monitor::Logger
-
     use :env, inferrer: -> { ENV.fetch('RACK_ENV', 'development').to_sym }
     use :logging
     use :notifications
@@ -27,13 +24,10 @@ module Snowflakes
     def self.inherited(klass)
       super
 
-      # From dry-web
-      klass.after(:configure) do
+      klass.after :configure do
         register_inflector
-        register_rack_monitor
+        load_paths! "lib"
       end
-
-      klass.load_paths! "lib"
 
       @_mutex.synchronize do
         Snowflakes.application = klass
@@ -90,12 +84,6 @@ module Snowflakes
     def self.register_inflector
       return self if key?(:inflector)
       register :inflector, inflector
-    end
-
-    def self.register_rack_monitor
-      return self if key?(:rack_monitor)
-      register(:rack_monitor, Dry::Monitor::Rack::Middleware.new(self[:notifications]))
-      self
     end
   end
 end
