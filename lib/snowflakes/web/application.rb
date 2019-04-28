@@ -11,7 +11,6 @@ module Snowflakes
         router = Router.new(
           application: application,
           endpoint_resolver: resolver,
-          configuration: resolve_configuration(application),
           &routes
         )
 
@@ -28,17 +27,6 @@ module Snowflakes
 
       def call(env)
         @app.call(env)
-      end
-
-      private
-
-      def resolve_configuration(application)
-        # TODO: can we make this cleaner somehow? via application settings?
-        if application.key?(key = "web.action.configuration")
-          application[key]
-        else
-          Hanami::Controller::Configuration.new
-        end
       end
     end
   end

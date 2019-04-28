@@ -49,10 +49,8 @@ module Snowflakes
       def resolve_string_identifier(name, namespace, configuration)
         identifier = [base_namespace, namespace, name].compact.join(".")
 
-        # byebug
-
         container[identifier].yield_self { |endpoint|
-          if endpoint.class < Hanami::Action
+          if configuration && endpoint.class < Hanami::Action
             endpoint.with(configuration: configuration)
           else
             endpoint
