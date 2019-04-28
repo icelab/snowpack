@@ -9,7 +9,7 @@ module Snowflakes
       attr_reader :container
       attr_reader :base_namespace
 
-      def initialize(application:, container: application, namespace: "web.actions")
+      def initialize(application:, container: application, namespace:)
         @application = application
         @container = container
         @base_namespace = namespace

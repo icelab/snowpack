@@ -6,7 +6,10 @@ module Snowflakes
   module Web
     class Application
       def initialize(application, &routes)
-        resolver = application.config.web.routing.endpoint_resolver
+        resolver = application.config.web.routing.endpoint_resolver.new(
+          application: application,
+          namespace: application.config.web.routing.action_key_namespace,
+        )
 
         router = Router.new(
           application: application,

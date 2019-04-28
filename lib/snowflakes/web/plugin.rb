@@ -10,7 +10,8 @@ module Snowflakes
 
         system.setting :web do
           setting :routing do
-            setting(:endpoint_resolver, EndpointResolver) { |resolver| resolver.new(application: system) }
+            setting :endpoint_resolver, EndpointResolver
+            setting :action_key_namespace, "web.actions"
           end
 
           setting :logging do
