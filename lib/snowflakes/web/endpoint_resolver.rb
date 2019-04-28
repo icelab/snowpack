@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # FIXME: This is for the NotCallableEndpointError. It would be good if this
 # could be require-able without having to bring in all the routing files
 require "hanami/routing"

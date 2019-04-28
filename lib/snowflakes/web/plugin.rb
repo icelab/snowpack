@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "dry/system/plugins"
 require_relative "endpoint_resolver"
 require_relative "rack_logger"
