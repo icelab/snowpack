@@ -12,8 +12,15 @@ RSpec.describe Snowflakes::Generator do
   end
 
   it "generates files" do
-    generator.(output_dir)
+    generator.(output_dir, application_name: "MyApp")
 
     expect(File.read(output_dir.join("hello.rb"))).to eq File.read(templates_dir.join("hello.rb"))
+
+    expect(File.read(output_dir.join("world.rb"))).to eq(<<~RB)
+      module MyApp
+        class World
+        end
+      end
+    RB
   end
 end
