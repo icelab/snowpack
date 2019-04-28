@@ -35,8 +35,6 @@ module Snowflakes
       end
 
       def mount(app, at:, host: nil, &block)
-        raise "Slices can only be mounted from top-level application" unless @application.respond_to?(:slices)
-
         if app.is_a?(Symbol) && (sliced_resolver = @endpoint_resolver.sliced(app))
           sliced_router = self.class.new(
             application: @application.slices[app],

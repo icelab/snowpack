@@ -18,6 +18,8 @@ module Snowflakes
       end
 
       def sliced(name)
+        raise "Slices can only be mounted from top-level application" unless application.respond_to?(:slices)
+
         slice = application.slices[name]
         return unless slice
 
