@@ -23,7 +23,7 @@ module Snowflakes
 
       # Ensure we always return a rack-conformant result (sometimes we get a
       # Hanami::Action::Response here, when we actually want the standard rack
-      # 3-compoment array)
+      # 3-element array)
       def call(*)
         super.to_a
       end
