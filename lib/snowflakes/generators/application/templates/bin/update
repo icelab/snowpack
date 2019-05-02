@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# update - Update the application to run for its current checkout.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+bin/bootstrap
+
+echo "==> Updating database…"
+bin/run db migrate

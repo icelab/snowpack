@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# bootstrap - Resolve all dependencies that the application requires to run.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+if [ "$(uname -s)" = "Darwin" ]; then
+  brew bundle check >/dev/null 2>&1  || {
+    echo "==> Installing Homebrew dependencies…"
+    brew bundle
+  }
+
+  echo "==> Installing package versions…"
+  brew bootstrap-asdf
+fi
+
+bundle check >/dev/null 2>&1 || {
+  echo "==> Installing gem dependencies…"
+  bundle install --quiet
+}
+
+echo "==> Installing node packages…"
+yarn

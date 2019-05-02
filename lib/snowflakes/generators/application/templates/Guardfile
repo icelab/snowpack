@@ -1,0 +1,7 @@
+guard "rack", port: 3000 do
+  watch "Gemfile.lock"
+  watch %r{config/.+\.(rb|html|yajl)}
+  watch %r{lib/.+\.(rb|html|yajl)}
+  watch %r{slices/.+\.(rb|html|yajl)}
+  watch %r{system/.+\.(rb|html|yajl)}
+end

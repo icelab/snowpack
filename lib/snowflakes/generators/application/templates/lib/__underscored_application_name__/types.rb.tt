@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+# auto_register: false
+
+require "dry/struct"
+require "dry/types"
+
+module <%= camel_cased_application_name %>
+  module Types
+    include Dry.Types(default: :strict)
+  end
+end

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# setup - Set up application for the first time after cloning.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+bin/bootstrap
+
+echo "==> Setting up database…"
+bin/run db create
+bin/run db create -e test
+
+bin/run db reset
+bin/run db reset -e test
+
+echo "==> App is ready to go!"

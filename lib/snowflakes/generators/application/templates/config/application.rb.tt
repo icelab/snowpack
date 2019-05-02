@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+require "logger"
+require "snowflakes/application"
+require "snowflakes/components"
+require "snowflakes/web/plugin"
+
+module <%= camel_cased_application_name %>
+  class Application < Snowflakes::Application
+    use :web
+
+    configure do
+      config.name = :<%= underscored_application_name %>
+      config.log_levels = %i[test development production].map { |e| [e, Logger::DEBUG] }.to_h
+      config.default_namespace = "<%= underscored_application_name %>"
+      config.auto_register = %w[lib/<%= underscored_application_name %>]
+    end
+  end
+end

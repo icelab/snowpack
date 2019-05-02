@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# server - Launch the application and its helper processes locally.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+test -z "$RACK_ENV" && RACK_ENV='development'
+
+hivemind Procfile.dev

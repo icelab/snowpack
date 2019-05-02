@@ -1,0 +1,45 @@
+# <%= camel_cased_application_name %>
+
+## Installation
+
+After cloning, run:
+
+```
+./bin/bootstrap
+```
+
+## Running system services
+
+To start the system services, run:
+
+```
+./bin/services
+```
+
+This must be running before completing the following steps.
+
+## Setup
+
+To set up for the first time, run:
+
+```
+./bin/setup
+```
+
+## After pulling changes
+
+After pulling changes from the remote, run:
+
+```
+./bin/update
+```
+
+This will install any new dependencies and run any migrations.
+
+## Running the app
+
+After updating, run:
+
+```
+./bin/server
+```

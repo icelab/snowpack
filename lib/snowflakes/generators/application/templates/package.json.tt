@@ -1,0 +1,25 @@
+{
+  "name": "<%= underscored_application_name %>",
+  "description": "Asset compilation with webpack",
+  "version": "1.0.0",
+  "author": "Icelab",
+  "repository": {},
+  "dependencies": {
+    "viewloader": "^2.0.0"
+  },
+  "devDependencies": {
+    "icelab-assets": "^2.0.1"
+  },
+  "engines": {
+    "node": ">= 6",
+    "npm": ">= 4"
+  },
+  "scripts": {
+    "start": "icelab-assets start --source-path=slices",
+    "build": "icelab-assets build --source-path=slices",
+    "build-production": "icelab-assets build --source-path=slices",
+    "test": "icelab-assets test --source-path=slices",
+    "create-entry": "icelab-assets create-entry",
+    "heroku-postbuild": "icelab-assets build --source-path=slices"
+  }
+}

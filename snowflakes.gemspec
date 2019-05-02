@@ -1,4 +1,3 @@
-# coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'snowflakes/version'
@@ -24,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "dry-monitor"
   spec.add_runtime_dependency "dry-system", "~> 0.12", ">= 0.12.0"
   spec.add_runtime_dependency "dry-types", "~> 1.0"
+  spec.add_runtime_dependency "down"
   spec.add_runtime_dependency "hanami-cli"
   spec.add_runtime_dependency "hanami-utils"
   spec.add_runtime_dependency "rack"

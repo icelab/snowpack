@@ -1,0 +1,5 @@
+require_relative "../../config/application"
+
+module <%= camel_cased_application_name %>
+  Import = Application.injector
+end

@@ -1,0 +1,17 @@
+<%= camel_cased_application_name %>::Application.boot :assets do |container|
+  init do
+    require "snowflakes/web/assets"
+  end
+
+  start do
+    use :settings
+
+    assets = Snowflakes::Web::Assets.new(
+      root: container.root,
+      precompiled: container.config.env == :production || container[:settings].assets_precompiled,
+      server_url: container[:settings].assets_server_url,
+    )
+
+    register :assets, assets
+  end
+end
