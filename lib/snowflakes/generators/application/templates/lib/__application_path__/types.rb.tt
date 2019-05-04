@@ -4,7 +4,7 @@
 require "dry/struct"
 require "dry/types"
 
-module <%= camel_cased_application_name %>
+module <%= application_module %>
   module Types
     include Dry.Types(default: :strict)
   end

@@ -1,4 +1,4 @@
-<%= camel_cased_application_name %>::Application.boot :web, namespace: true do |container|
+<%= application_module %>::Application.boot :web, namespace: true do |container|
   init do
     require "hanami/controller"
   end

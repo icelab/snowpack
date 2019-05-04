@@ -21,8 +21,8 @@ module Snowflakes
 
         def env(application_name)
           {
-            underscored_application_name: inflector.underscore(application_name),
-            camel_cased_application_name: inflector.camelize(application_name),
+            application_path: inflector.underscore(application_name),
+            application_module: inflector.camelize(application_name),
           }
         end
 

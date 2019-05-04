@@ -1,4 +1,4 @@
-# <%= camel_cased_application_name %>
+# <%= application_module %>
 
 ## Installation
 

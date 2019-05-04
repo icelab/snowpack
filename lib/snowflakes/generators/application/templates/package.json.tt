@@ -1,5 +1,5 @@
 {
-  "name": "<%= underscored_application_name %>",
+  "name": "<%= application_path %>",
   "description": "Asset compilation with webpack",
   "version": "1.0.0",
   "author": "Icelab",

@@ -5,9 +5,9 @@ require "hanami/controller"
 require "hanami/action/cookies"
 require "hanami/action/csrf_protection"
 require "hanami/action/session"
-require "<%= underscored_application_name %>/import"
+require "<%= application_path %>/import"
 
-module <%= camel_cased_application_name %>
+module <%= application_module %>
   module Web
     class Action < Hanami::Action
       def self.inherited(klass)

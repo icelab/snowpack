@@ -3,7 +3,7 @@
 
 require "dry/transaction/operation"
 
-module <%= underscored_application_name %>
+module <%= application_path %>
   class Operation
     def self.inherited(subclass)
       subclass.include Dry::Transaction::Operation

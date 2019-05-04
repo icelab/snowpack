@@ -1,6 +1,6 @@
 require "dry/view/context"
 
-module <%= camel_cased_application_name %>
+module <%= application_module %>
   module Web
     module View
       class Context < Dry::View::Context

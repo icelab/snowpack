@@ -1,4 +1,4 @@
-<%= camel_cased_application_name %>::Application.boot :logger do |container|
+<%= application_module %>::Application.boot :logger do |container|
   start do
     use :settings
 

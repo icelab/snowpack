@@ -1,4 +1,4 @@
-<%= camel_cased_application_name %>::Application.boot :monitor do
+<%= application_module %>::Application.boot :monitor do
   init do
     require "dry/monitor/sql/logger"
   end

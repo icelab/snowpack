@@ -5,15 +5,15 @@ require "snowflakes/application"
 require "snowflakes/components"
 require "snowflakes/web/plugin"
 
-module <%= camel_cased_application_name %>
+module <%= application_module %>
   class Application < Snowflakes::Application
     use :web
 
     configure do
-      config.name = :<%= underscored_application_name %>
+      config.name = :<%= application_path %>
       config.log_levels = %i[test development production].map { |e| [e, Logger::DEBUG] }.to_h
-      config.default_namespace = "<%= underscored_application_name %>"
-      config.auto_register = %w[lib/<%= underscored_application_name %>]
+      config.default_namespace = "<%= application_path %>"
+      config.auto_register = %w[lib/<%= application_path %>]
     end
   end
 end

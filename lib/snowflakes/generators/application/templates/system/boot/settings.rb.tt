@@ -1,18 +1,18 @@
-<%= camel_cased_application_name %>::Application.boot :settings, from: :system do
+<%= application_module %>::Application.boot :settings, from: :system do
   before :init do
-    require "<%= underscored_application_name %>/types"
+    require "<%= application_path %>/types"
   end
 
   settings do
     # Web app
-    key :session_secret, <%= camel_cased_application_name %>::Types::Strict::String.constrained(filled: true)
-    key :log_to_stdout, <%= camel_cased_application_name %>::Types::Params::Bool
+    key :session_secret, <%= application_module %>::Types::Strict::String.constrained(filled: true)
+    key :log_to_stdout, <%= application_module %>::Types::Params::Bool
 
     # Assets
-    key :assets_precompiled, <%= camel_cased_application_name %>::Types::Params::Bool
-    key :assets_server_url, <%= camel_cased_application_name %>::Types::Strict::String.constrained(filled: true).optional.default(nil)
+    key :assets_precompiled, <%= application_module %>::Types::Params::Bool
+    key :assets_server_url, <%= application_module %>::Types::Strict::String.constrained(filled: true).optional.default(nil)
 
     # Persistence
-    key :database_url, <%= camel_cased_application_name %>::Types::Strict::String.constrained(filled: true)
+    key :database_url, <%= application_module %>::Types::Strict::String.constrained(filled: true)
   end
 end

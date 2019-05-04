@@ -1,4 +1,4 @@
-<%= camel_cased_application_name %>::Application.boot :assets do |container|
+<%= application_module %>::Application.boot :assets do |container|
   init do
     require "snowflakes/web/assets"
   end
