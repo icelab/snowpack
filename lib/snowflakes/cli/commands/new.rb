@@ -17,11 +17,14 @@ module Snowflakes
           # TODO
           # raise ArgumentError, "invalid name application"
 
+          # TODO: make it so we can use out.puts again
+          puts "Generating into #{path}..."
+
           generator = Generators::Application::Generator.new
           generator.(path, name)
 
-          # TODO: make it so we can use out.puts again
-          puts "Done!"
+          puts "Bootstrapping..."
+          system "#{path}/bin/bootstrap"
         end
       end
     end
