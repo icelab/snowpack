@@ -19,3 +19,7 @@ bundle check >/dev/null 2>&1 || {
   bundle install --quiet
 }
 
+bundle check >/dev/null 2>&1 || {
+  echo "==> Installing node packages…"
+  yarn --silent
+}
