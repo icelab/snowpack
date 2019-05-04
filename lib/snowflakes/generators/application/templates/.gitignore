@@ -1,9 +1,10 @@
 # Local service data
 /data/*
 
-# App settings (keeping *-example files checked in)
+# App settings (keeping e.g. *-example files checked in)
 /.env*
-!/.env*-example
+!/.env-*
+!/.env*-*
 
 # RSpec
 /spec/examples.txt
