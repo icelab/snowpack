@@ -47,7 +47,7 @@ module Snowflakes
     def render_file_path(path, env)
       path.gsub(FILE_PATH_VAR_REGEXP) { |match|
         var_name = match.gsub(FILE_PATH_VAR_DELIMITER, "")
-        env.fetch(var_name.to_sym)
+        env.fetch(var_name.to_sym).to_s
       }
     end
   end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "dry/inflector"
+require "securerandom"
 require_relative "../../generator"
 
 module Snowflakes
@@ -23,6 +24,7 @@ module Snowflakes
           {
             application_path: inflector.underscore(application_name),
             application_module: inflector.camelize(application_name),
+            random: -> name, *args { SecureRandom.public_send(name, args) }
           }
         end
 
