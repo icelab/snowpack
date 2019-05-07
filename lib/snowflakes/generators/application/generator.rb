@@ -26,7 +26,7 @@ module Snowflakes
           {
             application_path: inflector.underscore(application_name),
             application_module: inflector.camelize(application_name),
-            random: -> name, *args { SecureRandom.public_send(name, args) }
+            random: -> name, *args { SecureRandom.public_send(name, *args) }
           }
         end
 
