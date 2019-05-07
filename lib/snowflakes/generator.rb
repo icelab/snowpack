@@ -14,7 +14,7 @@ module Snowflakes
 
     def initialize(templates_dir:)
       @templates_dir = templates_dir
-      @templates = Dir[File.join(templates_dir, "**/*")].select(&File.method(:file?)).map(&method(:Pathname))
+      @templates = Dir[File.join(templates_dir, "**/{*,.*}")].select(&File.method(:file?)).map(&method(:Pathname))
       @files = Hanami::Utils::Files
       # @file_helper = Hanami::CLI::FileHelper.new(templates_dir: templates_dir)
     end
