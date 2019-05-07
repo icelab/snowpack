@@ -3,7 +3,7 @@ require "<%= application_path %>/web/action"
 module <%= application_module %>
   module <%= slice_module %>
     module Web
-      class Action < <%= application_module %>::Action
+      class Action < <%= application_module %>::Web::Action
       end
     end
   end
