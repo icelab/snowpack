@@ -14,6 +14,7 @@ module Snowflakes
       require_relative "commands/assets/clobber"
       require_relative "commands/assets/compile"
       require_relative "commands/console"
+      require_relative "commands/generate/slice"
       require_relative "commands/db/create"
       require_relative "commands/db/create_migration"
       require_relative "commands/db/drop"

@@ -64,6 +64,12 @@ module Snowflakes
       @booted.equal?(true)
     end
 
+    MODULE_DELIMITER = "::"
+
+    def self.module
+      inflector.constantize(name.split(MODULE_DELIMITER)[0..-2].join(MODULE_DELIMITER))
+    end
+
     private
 
     def self.load_slice(base_path)

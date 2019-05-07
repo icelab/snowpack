@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+require_relative "slice"
+
+module <%= application_module %>
+  module <%= slice_module %>
+    Import = Slice.injector
+  end
+end
