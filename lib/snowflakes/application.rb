@@ -14,7 +14,7 @@ module Snowflakes
     setting :inflector, Dry::Inflector.new, reader: true
     setting :slices_dir, "slices"
 
-    use :env, inferrer: -> { ENV.fetch('RACK_ENV', 'development').to_sym }
+    use :env, inferrer: -> { ENV.fetch("RACK_ENV", "development").to_sym }
     use :logging
     use :notifications
     use :monitoring
