@@ -1,6 +1,6 @@
 # Disclaimer
 
-This project **is not ready for public usage** and it's **not open for contributions**. It will be open-sourced in the future, for the time being **you're not encouraged to use it** and **Icelab does not take any responsibility for its usage in your projects**.
+**This project is not intended for public usage and is not open for contributions. Icelab takes no responsibility for usage in your projects**.
 
 # Snowflakes
 
