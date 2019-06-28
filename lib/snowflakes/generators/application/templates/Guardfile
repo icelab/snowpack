@@ -1,4 +1,4 @@
-guard "puma", port: 3000 do
+guard "puma" do
   watch "Gemfile.lock"
   watch %r{config/.+}
   watch %r{lib/.+}
