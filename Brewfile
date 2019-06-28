@@ -1,2 +1,2 @@
-tap "icelab/bootstrap"
+tap "icelab/devtools"
 brew "asdf"

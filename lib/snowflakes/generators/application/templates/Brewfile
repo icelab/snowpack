@@ -1,4 +1,4 @@
-tap "icelab/bootstrap"
+tap "icelab/devtools"
 brew "asdf"
-brew "hivemind"
+brew "overmind"
 brew "yarn"

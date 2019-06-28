@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# services - Run the application's supporting services locally
-
-hivemind Procfile.services
