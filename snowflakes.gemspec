@@ -24,11 +24,11 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "dry-system", "~> 0.12", ">= 0.12.0"
   spec.add_runtime_dependency "dry-types", "~> 1.0"
   spec.add_runtime_dependency "down"
-  spec.add_runtime_dependency "hanami-cli"
-  spec.add_runtime_dependency "hanami-utils"
+  spec.add_runtime_dependency "hanami-cli"    # requires unstable branch from github in application Gemfile
+  spec.add_runtime_dependency "hanami-utils"  # requires unstable branch from github in application Gemfile
   spec.add_runtime_dependency "rack"
 
   spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake", "~> 11.0"
+  spec.add_development_dependency "rake", "~> 12.0"
   spec.add_development_dependency "rspec", "~> 3.0"
 end
