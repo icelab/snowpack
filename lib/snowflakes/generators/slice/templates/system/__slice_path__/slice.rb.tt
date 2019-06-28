@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+
+require "snowflakes/slice"
+
+module <%= application_module %>
+  module <%= slice_module %>
+    class Slice < Snowflakes::Slice
+    end
+  end
+end

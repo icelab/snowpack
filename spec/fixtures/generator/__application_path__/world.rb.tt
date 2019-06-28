@@ -1,0 +1,4 @@
+module <%= application_module %>
+  class World
+  end
+end

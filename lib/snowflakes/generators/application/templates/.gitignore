@@ -1,0 +1,20 @@
+# Local service data
+/data/*
+
+# App settings (keeping e.g. *-example files checked in)
+/.env*
+!/.env-*
+!/.env*-*
+
+# RSpec
+/spec/examples.txt
+
+# Logs
+/log/*.log
+
+# Temp files
+tmp/*
+
+# Front-end
+/node_modules
+/public/assets

@@ -5,6 +5,7 @@ require "pathname"
 require "open3"
 
 SPEC_ROOT = Pathname(__dir__).realpath
+FIXTURES_PATH = SPEC_ROOT.join("fixtures")
 
 Dir["#{SPEC_ROOT}/support/**/*.rb"].each { |f| require f }
 

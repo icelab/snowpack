@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+# auto_register: false
+
+require "slim"
+require "dry/view"
+require "<%= slice_path %>/slice"
+
+module <%= application_module %>
+  module <%= slice_module %>
+    module Web
+      class View < Dry::View
+        config.paths = [Slice.root.join("web/templates")]
+        config.layout = "application"
+      end
+    end
+  end
+end

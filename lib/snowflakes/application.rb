@@ -14,7 +14,7 @@ module Snowflakes
     setting :inflector, Dry::Inflector.new, reader: true
     setting :slices_dir, "slices"
 
-    use :env, inferrer: -> { ENV.fetch('RACK_ENV', 'development').to_sym }
+    use :env, inferrer: -> { ENV.fetch("RACK_ENV", "development").to_sym }
     use :logging
     use :notifications
     use :monitoring
@@ -41,6 +41,7 @@ module Snowflakes
     def self.load_slices
       @slices ||= Dir[File.join(config.root, config.slices_dir, "*")]
         .map(&method(:load_slice))
+        .compact
         .to_h
     end
 
@@ -64,11 +65,19 @@ module Snowflakes
       @booted.equal?(true)
     end
 
+    MODULE_DELIMITER = "::"
+
+    def self.module
+      inflector.constantize(name.split(MODULE_DELIMITER)[0..-2].join(MODULE_DELIMITER))
+    end
+
     private
 
     def self.load_slice(base_path)
       base_path = Pathname(base_path)
       full_defn_path = Dir["#{base_path}/system/**/slice.rb"].first
+
+      return unless full_defn_path
 
       require full_defn_path
 

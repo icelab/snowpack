@@ -1,0 +1,18 @@
+<%= application_module %>::Application.boot :settings, from: :system do
+  before :init do
+    require "<%= application_path %>/types"
+  end
+
+  settings do
+    # Web app
+    key :session_secret, <%= application_module %>::Types::Strict::String.constrained(filled: true)
+    key :log_to_stdout, <%= application_module %>::Types::Params::Bool
+
+    # Assets
+    key :assets_precompiled, <%= application_module %>::Types::Params::Bool
+    key :assets_server_url, <%= application_module %>::Types::Strict::String.constrained(filled: true).optional.default(nil)
+
+    # Persistence
+    key :database_url, <%= application_module %>::Types::Strict::String.constrained(filled: true)
+  end
+end

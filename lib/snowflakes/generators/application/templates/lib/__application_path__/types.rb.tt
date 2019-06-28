@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+# auto_register: false
+
+require "dry/struct"
+require "dry/types"
+
+module <%= application_module %>
+  module Types
+    include Dry.Types(default: :strict)
+  end
+end

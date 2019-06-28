@@ -1,0 +1,5 @@
+require_relative "../../config/application"
+
+module <%= application_module %>
+  Import = Application.injector
+end

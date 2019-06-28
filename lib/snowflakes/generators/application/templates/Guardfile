@@ -1,0 +1,7 @@
+guard "puma" do
+  watch "Gemfile.lock"
+  watch %r{config/.+}
+  watch %r{lib/.+}
+  watch %r{slices/.+}
+  watch %r{system/.+}
+end
