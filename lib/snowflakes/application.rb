@@ -41,6 +41,7 @@ module Snowflakes
     def self.load_slices
       @slices ||= Dir[File.join(config.root, config.slices_dir, "*")]
         .map(&method(:load_slice))
+        .compact
         .to_h
     end
 
@@ -75,6 +76,8 @@ module Snowflakes
     def self.load_slice(base_path)
       base_path = Pathname(base_path)
       full_defn_path = Dir["#{base_path}/system/**/slice.rb"].first
+
+      return unless full_defn_path
 
       require full_defn_path
 
