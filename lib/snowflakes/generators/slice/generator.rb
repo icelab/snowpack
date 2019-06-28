@@ -15,17 +15,32 @@ module Snowflakes
           super(templates_dir: templates_dir)
         end
 
-        def call(application:, slice_name:)
+        def call(application:, slice_name:, web:)
           slice_name = inflector.underscore(slice_name)
 
           output_dir = application.config.root.join("slices", slice_name) # TODO: don't hardcode "slices"
 
-          super(output_dir, env(application: application, slice_name: slice_name))
+          super(
+            output_dir,
+            env(application: application, slice_name: slice_name, web: web),
+          )
         end
 
         private
 
-        def env(application:, slice_name:)
+        def templates(web:, **)
+          super.then { |tpls|
+            if !web
+              tpls.reject { |tpl|
+                File.fnmatch?("*/web/**", tpl)
+              }
+            else
+              tpls
+            end
+          }
+        end
+
+        def env(application:, slice_name:, **others)
           application_path = inflector.underscore(application.module.to_s)
 
           {
@@ -34,7 +49,7 @@ module Snowflakes
             slice_name: slice_name,
             slice_path: "#{application_path}/#{slice_name}",
             slice_module: inflector.camelize(slice_name),
-          }
+          }.merge(**others)
         end
 
         # TODO: use application's own inflector

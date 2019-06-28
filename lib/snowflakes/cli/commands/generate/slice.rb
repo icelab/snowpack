@@ -9,10 +9,14 @@ module Snowflakes
   class CLI < Hanami::CLI
     module Commands
       module Generate
+        # TODO: this doesn't need "-e" environment option
         class Slice < Command
-          argument :name, desc: "Name for the slice"
+          desc "Generate slice"
 
-          def call(name:, **)
+          argument :name, desc: "Name for the slice"
+          option :web, type: :boolean, default: true, desc: "Include web routing and views support in generated slice"
+
+          def call(name:, web:, **)
             name ||= path
 
             # TODO
@@ -22,7 +26,7 @@ module Snowflakes
             puts "Generating slice..."
 
             generator = Generators::Slice::Generator.new
-            generator.(application: application, slice_name: name)
+            generator.(application: application, slice_name: name, web: web)
           end
         end
       end

@@ -3,24 +3,21 @@
 require "erb"
 require "hanami/utils/files"
 require "pathname"
-# require_relative "../ext/hanami/cli/file_helper"
 
 module Snowflakes
   class Generator
     attr_reader :templates_dir
-    attr_reader :templates
+    # attr_reader :templates
     attr_reader :files
     attr_reader :file_helper
 
     def initialize(templates_dir:)
       @templates_dir = templates_dir
-      @templates = Dir[File.join(templates_dir, "**/{*,.*}")].select(&File.method(:file?)).map(&method(:Pathname))
       @files = Hanami::Utils::Files
-      # @file_helper = Hanami::CLI::FileHelper.new(templates_dir: templates_dir)
     end
 
     def call(output_dir, **env)
-      templates.each do |template|
+      templates(**env).each do |template|
         output_file_path = render_file_path(template.relative_path_from(templates_dir).to_s, env)
 
         if File.extname(template) == ".tt"
@@ -36,6 +33,12 @@ module Snowflakes
     end
 
     private
+
+    # TODO: when we go to multi-template dirs, we'll need to make it so that the
+    # returned templates are bundled up with their root dirs
+    def templates(**env)
+      Dir[File.join(templates_dir, "**/{*,.*}")].select(&File.method(:file?)).map(&method(:Pathname))
+    end
 
     def render(template, env)
       ERB.new(File.read(template), nil, _trim_mode = "-").result_with_hash(env)
