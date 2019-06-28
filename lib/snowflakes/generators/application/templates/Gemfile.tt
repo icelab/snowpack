@@ -2,8 +2,7 @@ source "https://rubygems.org"
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-# TODO
-# ruby "2.6.2"
+ruby "<%= RUBY_VERSION %>"
 
 gem "rake"
 gem "snowflakes", github: "icelab/snowflakes"
