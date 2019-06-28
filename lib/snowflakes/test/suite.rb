@@ -35,7 +35,7 @@ module Snowflakes
         Suite.current = klass
       end
 
-      def self.configure(&block)
+      def self.configure
         RSpec.configure do |config|
           config.add_setting :suite
 
