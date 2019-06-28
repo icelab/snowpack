@@ -4,7 +4,7 @@ require "hanami/cli"
 require "uri"
 
 module Snowflakes
-  class CLI < Hanami::CLI
+  module CLI
     module Commands
       module DB
         module Utils

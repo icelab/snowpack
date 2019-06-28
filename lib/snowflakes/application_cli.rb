@@ -5,9 +5,8 @@ require_relative "../snowflakes"
 require_relative "cli/command"
 require_relative "cli/commands"
 
-
 module Snowflakes
-  class CLI < Hanami::CLI
+  class ApplicationCLI < Hanami::CLI
     def self.application
       if Snowflakes.application?
         Snowflakes.application
