@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "snowflakes/cli/command"
+require "snowflakes/cli/application/command"
 require "snowflakes/generators/slice/generator"
 
 module Snowflakes
@@ -8,7 +8,7 @@ module Snowflakes
     module Application
       module Commands
         module Generate
-          class Slice < CLI::Command
+          class Slice < Command
             desc "Generate slice"
 
             argument :name, desc: "Name for the slice"
