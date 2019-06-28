@@ -105,11 +105,6 @@ module Snowflakes
         data.fetch('result').fetch('covered_percent').to_f.round
       end
 
-      def require_containers
-        application.require_container
-        application.require_sub_app_containers
-      end
-
       def test_group_name
         @__test_group_name__ ||= "test_suite_#{build_idx}"
       end
