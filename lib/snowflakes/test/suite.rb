@@ -149,11 +149,11 @@ module Snowflakes
       end
 
       def log_dir
-        application.root.join("log").realpath
+        application.root.join("log").to_s
       end
 
       def tmp_dir
-        application.root.join("tmp").realpath
+        application.root.join("tmp").to_s
       end
 
       def clean_db?(example)
