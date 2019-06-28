@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "snowflakes/cli"
+require "snowflakes/cli/application/cli"
 require_relative "../system/dummy/application"
 
-Snowflakes::CLI.new.call
+Snowflakes::CLI::Application::CLI.new.call
