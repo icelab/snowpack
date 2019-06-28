@@ -14,37 +14,33 @@ gem "dry-web"
 gem "hanami-utils", github: "hanami/utils", branch: "unstable"
 gem "hanami-router", github: "hanami/router", branch: "unstable"
 gem "hanami-controller", github: "hanami/controller", branch: "unstable"
-gem "puma"
-gem "rack"
+gem "puma", "~> 3.0"
+gem "rack", "~> 2.0"
 
 # Persistence
 gem "pg"
-gem "rom", github: "rom-rb/rom", branch: "master"
-gem "rom-sql", github: "rom-rb/rom-sql", branch: "master"
+gem "rom", "~> 5.0"
+gem "rom-sql", "~> 3.0"
 gem "sequel_pg"
 
 # Application dependencies
 gem "dry-auto_inject"
 gem "dry-matcher"
-gem "dry-monads"
-gem "dry-schema", "~> 0.5"
-gem "dry-struct"
+gem "dry-monads", "~> 1.0"
+gem "dry-schema", "~> 1.0"
+gem "dry-struct", "~> 1.0"
 gem "dry-transaction"
-gem "dry-types"
-gem "dry-validation", "1.0.0.rc1"
+gem "dry-types", "~> 1.0"
+gem "dry-validation", "~> 1.0"
 gem "dry-view"
-gem "down"
-gem "slim"
+gem "slim", "~> 4.0"
 
 group :development, :test do
   gem "guard"
-  gem "guard-rack"
+  gem "guard-puma"
   gem "pry-byebug", platform: :mri
 end
 
 group :test do
-  gem "capybara"
-  gem "capybara-screenshot"
-  gem "poltergeist"
-  gem "rspec"
+  gem "rspec", "~> 3.0"
 end
