@@ -3,6 +3,7 @@
 require "dry/inflector"
 require "securerandom"
 require "shellwords"
+require "snowflakes/version"
 require_relative "../../generator"
 
 module Snowflakes
@@ -26,7 +27,8 @@ module Snowflakes
           {
             application_path: inflector.underscore(application_name),
             application_module: inflector.camelize(application_name),
-            random: -> name, *args { SecureRandom.public_send(name, *args) }
+            random: -> name, *args { SecureRandom.public_send(name, *args) },
+            snowflakes_version: Snowflakes::VERSION,
           }
         end
 
