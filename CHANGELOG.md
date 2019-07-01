@@ -1,6 +1,12 @@
 # Changelog
 
-## [1.0.0.alpha1] - 2019-07-01
+## [1.0.0.alpha2] - 2019-07-01 [YANKED]
+
+### Changed
+
+- Fix case of gem name (now "snowpack", fully lowercase)
+
+## [1.0.0.alpha1] - 2019-07-01 [YANKED]
 
 ### Added
 
