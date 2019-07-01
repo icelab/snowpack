@@ -1,7 +1,0 @@
-#!/usr/bin/env ruby
-
-require "bundler/setup"
-require "snowflakes/cli/application/cli"
-require_relative "../config/application"
-
-Snowflakes::CLI::Application::CLI.new.call

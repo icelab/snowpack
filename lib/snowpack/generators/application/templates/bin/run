@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
-# frozen_string_literal: true
 
 require "bundler/setup"
 require "snowpack/cli/application/cli"
-require_relative "../system/dummy/application"
+require_relative "../config/application"
 
 Snowpack::CLI::Application::CLI.new.call

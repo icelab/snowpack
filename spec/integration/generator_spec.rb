@@ -1,7 +1,7 @@
 require "spec_helper"
-require "snowflakes/generator"
+require "snowpack/generator"
 
-RSpec.describe Snowflakes::Generator do
+RSpec.describe Snowpack::Generator do
   subject(:generator) { described_class.new(templates_dir: templates_dir) }
 
   let(:templates_dir) { FIXTURES_PATH.join("generator") }

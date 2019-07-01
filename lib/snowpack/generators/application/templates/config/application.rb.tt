@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+require "logger"
+require "snowpack/application"
+require "snowpack/components"
+require "snowpack/web/plugin"
+
+module <%= application_module %>
+  class Application < Snowpack::Application
+    use :web
+
+    configure do
+      config.name = :<%= application_path %>
+      config.log_levels = %i[test development production].map { |e| [e, Logger::DEBUG] }.to_h
+      config.default_namespace = "<%= application_path %>"
+      config.auto_register = %w[lib/<%= application_path %>]
+    end
+  end
+end
