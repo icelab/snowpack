@@ -6,107 +6,111 @@
 
 [![Build Status](https://travis-ci.org/icelab/snowflakes.svg?branch=master)](https://travis-ci.org/icelab/snowflakes)
 
-Snowflakes is a collection of development tools and common dry-system application components shared across Icelab's applications.
+Snowflakes is lightwight application framework for Icelab’s Ruby applications. It builds upon [dry-system][dry-system], and integrates Hanami [router][hanami-router]/[controller][hanami-controller] (unstable branches) for HTTP request handling, and [rom-rb] for database persistence.
 
-## Installation
+[dry-system]: https://github.com/dry-rb/dry-system
+[hanami-router]: https://github.com/hanami/router
+[hanami-controller]: https://github.com/hanami/controller
+[rom-rb]: https://rom-rb.org/
 
-Add this line to your application's Gemfile:
+## Getting started
 
-```ruby
-gem 'snowflakes', git: 'https://github.com/icelab/snowflakes.git', branch: 'master'
-```
-
-And then execute:
-
-```
-$ bundle
-```
-
-Run installation command:
+Install the gem:
 
 ```
-$ sf install
+gem install snowflakes -v "1.0.0.alpha1"
+```
+
+Generate a new application:
+
+```
+snowflakes new my_app
+```
+
+Then enter the application and (if required) generate a new slice:
+
+```
+./bin/run generate slice main
 ```
 
 ## CLI
 
-Snowflake's ships with a CLI accessible via `bin/run` executable, which provides access to various commands.
-To learn about available tasks, simply run:
+Snowflakes’ application CLI is accessible via the `bin/run` executable, which provides access to various commands. To learn about these, simply run:
 
 ```
-$ bin/run
+$ ./bin/run
 Commands:
-  run assets SUBCOMMAND  # Asset commands
-  run console            # Start application console
-  run db SUBCOMMAND      # Database commands
-  run help [COMMAND]     # Describe available commands or one specific command
-  run reloader           # Start application reloader
-  run routes SUBCOMMAND  # Route commands
-```
+  run assets [SUBCOMMAND]
+  run console                            # Open interactive console
+  run db [SUBCOMMAND]
+  run generate [SUBCOMMAND]
+  ```
 
-To learn about sub-commands, you can type:
+To learn about sub-commands, run the parent command:
 
 ```
-$ bin/run db
+$ ./bin/run db
 Commands:
-  run db create                # Create database
-  run db drop                  # Drop database
-  run db help [COMMAND]        # Describe subcommands or one specific subcommand
-  run db migrate               # Run database migrations
-  run db migrate               # Run database migrations
-  run db reset                 # Drop, create and migrate the database
-  run db sample_data           # Load db sample data if it exists
-  run db seed                  # Load db seed if it exists
-  run db structure SUBCOMMAND  # Database structure commands
-  run db version               # Print schema version
+  run db create                                  # Create database
+  run db create_migration [NAME]                 # Create new migration file
+  run db drop                                    # Delete database
+  run db migrate                                 # Migrates database
+  run db reset                                   # Drop, create, and migrate database
+  run db rollback                                # Rollback database to a previous migration
+  run db sample_data                             # Load sample data
+  run db seed                                    # Load database seeds
+  run db structure [SUBCOMMAND]
+  run db version                                 # Print schema version
 ```
 
-To learn about a specific command and its options, type:
+To learn about any specific command, pass the `-h` or `--help` option:
 
 ```
-$ bin/run db help create
+$ ./bin/run db migrate --help
+Command:
+  run db migrate
+
 Usage:
-  run create
+  run db migrate
+
+Description:
+  Migrates database
 
 Options:
-  -e, [--env=ENV]  # Application environment
-
-Create database
+  --env=VALUE, -e VALUE                 # Application environment
+  --target=VALUE, -t VALUE              # Target migration number
+  --help, -h                            # Print this help
 ```
 
 ## Console
 
-Application console is available via `bin/run console`, which automatically provides convenient access to various components:
+An application console is available via `bin/run console`. It provides convenient access to various components:
 
 ```
-=> starting berg[development] console
-=> berg[development] booted in in 2.528877s
-berg[development]>
+=> starting my_app[development] console
+=> my_app[development] booted in in 0.4s
+my_app[development]>
 ```
 
-### Console Plugins
+### Console helpers
 
-REPL context object has access to all relations and all sub-apps repositories:
+The console offers convenient access to all rom-rb relations:
 
 ```
-berg[development]> users
+my_app[development]> users
 => #<Persistence::Relations::Users dataset=#<Sequel::Postgres::Dataset: "SELECT \"id\", \"email\", \"encrypted_password\", \"access_token\", \"access_token_expiration\", \"active\", \"created_at\", \"updated_at\", \"name\" FROM \"users\" ORDER BY \"users\".\"id\"">>
-berg[development]> user_repo
-=> #<Main::Persistence::Repositories::Users relations=[:users]>
 ```
 
-## Application reloader
-
-For the reloader to work you need to start puma as follows:
+As well as all slices:
 
 ```
-bundle exec puma config.ru --pidfile tmp/pids/puma-api.pid
+my_app[development]> main
+=> MyApp::Main::Slice
 ```
 
-To start application reloader type:
+As well as any root-level registrations on the slices:
 
 ```
-$ bin/run reloader
+my_app[development]> main.user_repo
+# => #<MyApp::Main::UserRepo struct_namespace=MyApp::Main::Entities auto_struct=true>
 ```
-
-It will restart your puma server ever time a file is changed or added to `apps` dir.
