@@ -1,0 +1,46 @@
+source "https://rubygems.org"
+
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+ruby "<%= RUBY_VERSION %>"
+
+gem "rake"
+gem "snowpack", "<%= snowpack_version %>"
+gem "hanami-cli", github: "hanami/cli", branch: "unstable"
+
+# Web framework
+gem "dry-system"
+gem "dry-web"
+gem "hanami-utils", github: "hanami/utils", branch: "unstable"
+gem "hanami-router", github: "hanami/router", branch: "unstable"
+gem "hanami-controller", github: "hanami/controller", branch: "unstable"
+gem "puma", "~> 3.0"
+gem "rack", "~> 2.0"
+
+# Persistence
+gem "pg"
+gem "rom", "~> 5.0"
+gem "rom-sql", "~> 3.0"
+gem "sequel_pg"
+
+# Application dependencies
+gem "dry-auto_inject"
+gem "dry-matcher"
+gem "dry-monads", "~> 1.0"
+gem "dry-schema", "~> 1.0"
+gem "dry-struct", "~> 1.0"
+gem "dry-transaction"
+gem "dry-types", "~> 1.0"
+gem "dry-validation", "~> 1.0"
+gem "dry-view"
+gem "slim", "~> 4.0"
+
+group :development, :test do
+  gem "guard"
+  gem "guard-puma"
+  gem "pry-byebug", platform: :mri
+end
+
+group :test do
+  gem "rspec", "~> 3.0"
+end

@@ -2,11 +2,11 @@
 
 **This project is not intended for public usage and is not open for contributions. Icelab takes no responsibility for usage in your projects**.
 
-# Snowflakes
+# Snowpack
 
-[![Build Status](https://travis-ci.org/icelab/snowflakes.svg?branch=master)](https://travis-ci.org/icelab/snowflakes)
+[![Build Status](https://travis-ci.org/icelab/snowpack.svg?branch=master)](https://travis-ci.org/icelab/snowpack)
 
-Snowflakes is lightwight application framework for Icelab’s Ruby applications. It builds upon [dry-system][dry-system], and integrates Hanami [router][hanami-router]/[controller][hanami-controller] (unstable branches) for HTTP request handling, and [rom-rb] for database persistence.
+Snowpack is lightwight application framework for Icelab’s Ruby applications. It builds upon [dry-system][dry-system], and integrates Hanami [router][hanami-router]/[controller][hanami-controller] (unstable branches) for HTTP request handling, and [rom-rb] for database persistence.
 
 [dry-system]: https://github.com/dry-rb/dry-system
 [hanami-router]: https://github.com/hanami/router
@@ -18,13 +18,13 @@ Snowflakes is lightwight application framework for Icelab’s Ruby applications.
 Install the gem:
 
 ```
-gem install snowflakes -v "1.0.0.alpha1"
+gem install snowpack -v "1.0.0.alpha1"
 ```
 
 Generate a new application:
 
 ```
-snowflakes new my_app
+snowpack new my_app
 ```
 
 Then enter the application and (if required) generate a new slice:
@@ -35,7 +35,7 @@ Then enter the application and (if required) generate a new slice:
 
 ## CLI
 
-Snowflakes’ application CLI is accessible via the `bin/run` executable, which provides access to various commands. To learn about these, simply run:
+Snowpack’ application CLI is accessible via the `bin/run` executable, which provides access to various commands. To learn about these, simply run:
 
 ```
 $ ./bin/run

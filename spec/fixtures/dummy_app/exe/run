@@ -3,10 +3,10 @@
 require "bundler"
 Bundler.setup
 
-require "snowflakes/cli"
+require "snowpack/cli"
 
 begin
-  require_relative '../config/snowflakes'
+  require_relative '../config/snowpack'
 rescue LoadError; end
 
-Snowflakes::CLI.start(ARGV)
+Snowpack::CLI.start(ARGV)

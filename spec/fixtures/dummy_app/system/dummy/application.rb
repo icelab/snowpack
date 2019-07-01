@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "snowflakes/application"
+require "snowpack/application"
 
 module Dummy
-  class Application < Snowflakes::Application
+  class Application < Snowpack::Application
     # use :env
     configure do |config|
       config.name = :dummy

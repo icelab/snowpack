@@ -4,10 +4,10 @@
 
 ### Added
 
-- Introduce app/slices structure via `Snowflakes::Application` and `Snowflakes::Slice`
-- Introduce `Snowflakes::Web` module for holding route definitions and preparing rack app
-- Introduce `Snowflakes::Web::Application` and `Snowflakes::Web::Plugin` dry-system plugin, which provide a rack-mountable web application (and supporting infrastructure) depending upon hanami-router (unstable branch) for routing and hanami-controller (unstable branch) for HTTP endpoint handling
-- Introduce `snowflakes` CLI with `new` command for generating new applications
+- Introduce app/slices structure via `Snowpack::Application` and `Snowpack::Slice`
+- Introduce `Snowpack::Web` module for holding route definitions and preparing rack app
+- Introduce `Snowpack::Web::Application` and `Snowpack::Web::Plugin` dry-system plugin, which provide a rack-mountable web application (and supporting infrastructure) depending upon hanami-router (unstable branch) for routing and hanami-controller (unstable branch) for HTTP endpoint handling
+- Introduce `snowpack` CLI with `new` command for generating new applications
 - Add `generate slice` application CLI command
 
 ### Changed

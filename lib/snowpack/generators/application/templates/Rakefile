@@ -1,0 +1,5 @@
+require "bundler/setup"
+require_relative "config/application"
+require "snowpack/test_tasks"
+
+Rake.add_rakelib "tasks"
