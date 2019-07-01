@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'delegate'
-
-require 'snowflakes/console/plugins/relation_readers'
-require 'snowflakes/console/plugins/repo_readers'
+require_relative "plugins/relation_readers"
+require_relative "plugins/slice_readers"
 
 module Snowflakes
   module Console
@@ -15,7 +13,7 @@ module Snowflakes
 
         if ctx.rom
           ctx.extend(Snowflakes::Console::Plugins::RelationReaders.new(ctx))
-          ctx.extend(Snowflakes::Console::Plugins::RepoReaders.new(ctx))
+          ctx.extend(Snowflakes::Console::Plugins::SliceReaders.new(ctx))
         end
 
         ctx
@@ -27,7 +25,7 @@ module Snowflakes
       end
 
       def rom
-        application['persistence.rom'] if application.key?('persistence.rom')
+        application["persistence.rom"] if application.key?("persistence.rom")
       end
     end
   end
