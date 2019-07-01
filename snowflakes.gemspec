@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Tim Riley", "Piotr Solnica"]
   spec.email         = ["tim@icelab.com.au", "piotr@icelab.com.au"]
 
-  spec.summary       = %{A summary}
-  spec.description   = %q{A description}
+  spec.summary       = "Lightweight application framework for Icelab"
+  spec.description   = spec.summary
   spec.homepage      = "https://github.com/icelab/snowflakes"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
