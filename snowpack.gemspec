@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'snowpack/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "Snowpack"
+  spec.name          = "snowpack"
   spec.version       = Snowpack::VERSION
   spec.authors       = ["Tim Riley", "Piotr Solnica"]
   spec.email         = ["tim@icelab.com.au", "piotr@icelab.com.au"]
