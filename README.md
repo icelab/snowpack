@@ -18,7 +18,7 @@ Snowpack is lightwight application framework for Icelab’s Ruby applications. I
 Install the gem:
 
 ```
-gem install snowpack -v "1.0.0.alpha1"
+gem install snowpack -v "1.0.0.alpha2"
 ```
 
 Generate a new application:
