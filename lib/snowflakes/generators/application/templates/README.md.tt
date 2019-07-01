@@ -5,15 +5,15 @@
 After cloning, run:
 
 ```
-./bin/bootstrap
+./script/bootstrap
 ```
 
-## Running system services
+## Running support services
 
-To start the system services, run:
+To start the supporting services, run:
 
 ```
-./bin/services
+./script/support
 ```
 
 This must be running before completing the following steps.
@@ -23,7 +23,7 @@ This must be running before completing the following steps.
 To set up for the first time, run:
 
 ```
-./bin/setup
+./script/setup
 ```
 
 ## After pulling changes
@@ -31,7 +31,7 @@ To set up for the first time, run:
 After pulling changes from the remote, run:
 
 ```
-./bin/update
+./script/update
 ```
 
 This will install any new dependencies and run any migrations.
@@ -41,5 +41,5 @@ This will install any new dependencies and run any migrations.
 After updating, run:
 
 ```
-./bin/server
+./script/server
 ```
