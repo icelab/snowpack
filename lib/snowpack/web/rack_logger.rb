@@ -60,9 +60,9 @@ module Snowpack
           if filter_params.include?(k)
             h.update(k => FILTERED)
           elsif v.is_a?(Hash)
-            h.update(k => filter_params(v))
+            h.update(k => filter(v))
           elsif v.is_a?(Array)
-            h.update(k => v.map { |m| m.is_a?(Hash) ? filter_params(m) : m })
+            h.update(k => v.map { |m| m.is_a?(Hash) ? filter(m) : m })
           else
             h[k] = v
           end
