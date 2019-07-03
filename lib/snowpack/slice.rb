@@ -48,6 +48,8 @@ module Snowpack
     end
 
     def self.finalize!
+      return self if finalized?
+
       # Force `after :configure` hooks to run
       configure do; end
 
