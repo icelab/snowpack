@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
-# FIXME: This is for the NotCallableEndpointError. It would be good if this
-# could be require-able without having to bring in all the routing files
-require "hanami/routing"
-
 module Snowpack
   module Web
     class EndpointResolver
+      class NotCallableEndpointError < StandardError
+        def initialize(endpoint)
+          super("#{endpoint.inspect} isn't compatible with Rack. Please make sure it implements #call.")
+        end
+      end
+
       attr_reader :application
       attr_reader :container
       attr_reader :base_namespace
@@ -42,7 +44,7 @@ module Snowpack
           end
 
         unless endpoint.respond_to?(:call)
-          raise Hanami::Routing::NotCallableEndpointError.new(endpoint)
+          raise NotCallableEndpointError.new(endpoint)
         end
 
         endpoint
