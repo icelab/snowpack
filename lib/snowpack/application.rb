@@ -39,7 +39,7 @@ module Snowpack
     end
 
     def self.load_slices
-      @slices ||= Dir[File.join(config.root, config.slices_dir, "*")]
+      @slices ||= slice_paths
         .map(&method(:load_slice))
         .compact
         .to_h
@@ -72,6 +72,10 @@ module Snowpack
     end
 
     private
+
+    def self.slice_paths
+      Dir[File.join(config.root, config.slices_dir, "*")]
+    end
 
     def self.load_slice(base_path)
       base_path = Pathname(base_path)
