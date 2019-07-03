@@ -47,7 +47,7 @@ module Snowpack
       finalize!
     end
 
-    def self.finalize!
+    def self.finalize!(*)
       return self if finalized?
 
       # Force `after :configure` hooks to run
