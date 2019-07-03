@@ -26,6 +26,10 @@ module Snowpack
         if File.directory?(slice_path)
           klass.config.root = slice_path if File.directory?(slice_path)
           klass.load_paths! "lib"
+
+          if File.directory?(File.join(klass.config.root, klass.config.system_dir))
+            klass.load_paths! klass.config.system_dir
+          end
         end
 
         klass.import application: app
