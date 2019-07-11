@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "bundler/setup" if File.exist?("Gemfile")
 require "snowpack/cli/standalone/cli"
 
 Snowpack::CLI::Standalone::CLI.new.call
