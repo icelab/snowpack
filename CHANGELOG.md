@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.0.alpha4] - 2019-07-11
+
+### Fixed
+
+- Remove require of bundler/setup in `snowpack` executable entirely
+
 ## [1.0.0.alpha3] - 2019-07-11
 
 ### Added
