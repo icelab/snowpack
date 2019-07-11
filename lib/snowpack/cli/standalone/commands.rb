@@ -7,6 +7,7 @@ module Snowpack
         extend Hanami::CLI::Registry
 
         require_relative "commands/new"
+        require_relative "commands/version"
       end
     end
   end
