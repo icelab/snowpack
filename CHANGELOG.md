@@ -1,6 +1,25 @@
 # Changelog
 
-## [1.0.0.alpha2] - 2019-07-01 [YANKED]
+## [1.0.0.alpha3] - 2019-07-11
+
+### Added
+
+- Add `snowpack version` subcommand for standalone executable
+
+### Changed
+
+- Add Application.slice_paths method, this can be overridden in subclasses to allow selective ignoring of some slices (this is not a perfect final solution, but helps in the interim)
+- Slice.finalize! exits gracefully if Slice already finalized
+- Slice.finalize! passes all its arguments to super
+- Add Slice's default system_dir (if it exists) when inheriting from Snowpack::Slice
+- Use internal error class in Web::EndpointResolver, allowing snowpack apps to work without hanami-controller installed
+
+### Fixed
+
+- Fix bug with recersive filtering in RackLogger
+- Remove require of bundler/setup preventing `snowpack` executable from working in some circumstances
+
+## [1.0.0.alpha2] - 2019-07-01
 
 ### Changed
 
