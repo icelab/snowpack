@@ -29,7 +29,7 @@ module Snowpack
             end
 
             def has_file?
-              File.exist?(seeds_path)
+              File.exist?(file_path)
             end
           end
         end
