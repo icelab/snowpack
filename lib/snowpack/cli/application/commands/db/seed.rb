@@ -14,7 +14,6 @@ module Snowpack
             def call(**)
               if has_file?
                 measure "Database seeds loaded" do
-                  application.boot
                   load file_path
                 end
               else
