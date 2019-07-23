@@ -17,7 +17,7 @@ module Snowpack
             def call(target: nil, **)
               measure "database #{database.name} migrated" do
                 if target
-                  run_migrations(target: target)
+                  run_migrations(target: Integer(target))
                 else
                   run_migrations
                 end
