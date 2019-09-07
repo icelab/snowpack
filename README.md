@@ -35,7 +35,7 @@ Then enter the application and (if required) generate a new slice:
 
 ## CLI
 
-Snowpack’ application CLI is accessible via the `bin/run` executable, which provides access to various commands. To learn about these, simply run:
+Snowpack's application CLI is accessible via the `bin/run` executable, which provides access to various commands. To learn about these, run:
 
 ```
 $ ./bin/run
