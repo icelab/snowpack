@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.0.0.alpha5] - 2019-09-20
+
+### Changed
+
+- Remove dry-transaction from generated application `Gemfile`
+
+### Fixed
+
+CLI:
+
+- Don't crash when referring to seeds file path in `db seed` command
+- Don't boot application before loading seeds in `db seed` command (the application boot process may depend on the seeds having been run first)
+- Fix crash when passing a previous migration target to `db migrate` command
+
+App generation:
+
+- Ensure `tmp/` dir is generated with new apps
+- Fixed module nesting of generated `Operation` class
+- Include dry-monads/dry-matcher directly in generated `Operation` class (rather than `Dry::Transaction::Operation`, given dry-transaction is no longer a generated gem dependency)
+
+Spec suite:
+
+- Don't crash when `tmp/` dir is not present
+
 ## [1.0.0.alpha4] - 2019-07-11
 
 ### Fixed
