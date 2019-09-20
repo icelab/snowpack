@@ -56,7 +56,7 @@ module Snowpack
           config.filter_run :focus
           config.run_all_when_everything_filtered = true
 
-          config.example_status_persistence_file_path = root.join("../tmp").realpath.join("spec/examples.txt").to_s
+          config.example_status_persistence_file_path = root.join("../tmp").join("spec/examples.txt").expand_path.to_s
 
           if config.files_to_run.one?
             config.default_formatter = "doc"
