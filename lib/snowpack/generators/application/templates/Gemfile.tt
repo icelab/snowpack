@@ -25,7 +25,7 @@ gem "sequel_pg"
 
 # Application dependencies
 gem "dry-auto_inject"
-gem "dry-matcher"
+gem "dry-matcher", "~> 0.8", ">= 0.8.2"
 gem "dry-monads", "~> 1.0"
 gem "dry-schema", "~> 1.0"
 gem "dry-struct", "~> 1.0"
