@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.0.alpha6] - 2019-10-22
+
+### Added
+
+- Added custom Appsignal/Sidekiq instrumentation
+
+### Fixed
+
+- Reduced arity strictness of Appsignal/Que error handler
+
 ## [1.0.0.alpha5] - 2019-09-20
 
 ### Changed
