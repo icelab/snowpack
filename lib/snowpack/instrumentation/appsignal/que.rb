@@ -15,11 +15,9 @@ module Snowpack
         # Enable like so:
         #
         # Que.error_notifier = Snowpack::Instrumentation::Appsignal::Que::ErrorNotifier
-
-        # Actually, why is this even necessry?
-        ErrorNotifier = -> error, _job {
+        ErrorNotifier = proc do |error, _job|
           ::Appsignal::Transaction.current.set_error(error)
-        }
+        end
 
         def self.included(base)
           base.class_eval do
