@@ -4,6 +4,7 @@
   end
 
   start do
+    notifications.register_event :sql
     Dry::Monitor::SQL::Logger.new(logger).subscribe(notifications)
   end
 end
