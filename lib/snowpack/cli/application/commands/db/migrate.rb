@@ -15,6 +15,8 @@ module Snowpack
             option :target, desc: "Target migration number", aliases: ["-t"]
 
             def call(target: nil, **)
+              return if Dir[application.root.join("db/migrate/*.rb")].empty?
+
               measure "database #{database.name} migrated" do
                 if target
                   run_migrations(target: Integer(target))
