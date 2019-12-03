@@ -30,7 +30,7 @@ module Snowpack
 
             private
 
-            def run_migrations(**options  )
+            def run_migrations(**options)
               ROM::SQL.with_gateway(database.gateway) do
                 database.migrator.run(options)
               end
