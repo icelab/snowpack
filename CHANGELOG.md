@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0.alpha7] - 2019-12-03
+
+### Fixed
+
+- Set up :sql notification event before enabling SQL logging
+- CLI `db migrate` task can now run when no migration files are present
+
 ## [1.0.0.alpha6] - 2019-10-22
 
 ### Added
