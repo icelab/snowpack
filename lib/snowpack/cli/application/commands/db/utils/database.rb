@@ -65,7 +65,7 @@ module Snowpack
               end
 
               def migrations_path
-                File.join(application.root, "db/migrate")
+                File.join(root_path, "db/migrate")
               end
             end
           end
